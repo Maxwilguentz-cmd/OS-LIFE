@@ -129,12 +129,9 @@ class Store {
     this._notify();
   }
 
-const nextState = {
-  ...updateNested(this.state, pathArray, value)
-};
+
   updateState(path, value) {
     const pathArray = Array.isArray(path) ? path : [path];
-
     // Validation pou evite kreye path ki pa lojik (eg: path vid)
     if (pathArray.length === 0) {
       console.warn("Store: updateState rele ak yon path vid.");
@@ -185,8 +182,9 @@ const nextState = {
 
     try {
       // updateNested ap fè kopi pasyèl (shallow copy) sou nivo n ap modifye yo sèlman pou pèfòmans.
-      const nextState = updateNested(this.state, pathArray, value);
-
+const nextState = {
+  ...updateNested(this.state, pathArray, value)
+};
       nextState.meta = {
         ...this.state.meta,
         updatedAt: new Date().toISOString()
