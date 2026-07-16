@@ -1,114 +1,203 @@
 /**
  * LifeOS — UI Events Module
- * Okipe tout koute evènman (event listeners) epi konekte yo ak store ak sèvis yo
+ * Jere tout event listeners yo epi konekte yo ak Store la.
  */
 
 import { store } from "../core/store.js";
-import { financeService } from "../services/financeService.js";
-import { internetService } from "../services/internetService.js";
 
-export function bindEvents() {
-  
-  // 1. CHWA MOOD (Mood buttons handler)
+export function bindGlobalEvents() {
+
+  // 1. MOOD BUTTONS
   const moodRow = document.getElementById("moodRow");
+
   if (moodRow) {
     moodRow.addEventListener("click", (e) => {
+
       const btn = e.target.closest(".mood-btn");
       if (!btn) return;
 
-      const selectedMood = btn.getAttribute("data-mood");
-      const label = btn.getAttribute("data-label");
+      const selectedMood = btn.dataset.mood;
+      const label = btn.dataset.label;
 
-      // Nou delege chanjman an bay store la pa lwa dispatch
-      store.dispatch({
-        type: "SET_MOOD",
-        payload: {
-          current: selectedMood,
-          note: `You logged feeling ${label} today. Keep focusing on your goals!`
-        }
+      store.updateState(["mood"], {
+        current: selectedMood,
+        note: `You logged feeling ${label} today. Keep focusing on your goals!`
       });
+
     });
   }
 
-  // 2. CHANJE TEM (Theme Toggle)
+
+  // 2. THEME TOGGLE
   const themeToggle = document.getElementById("themeToggle");
+
   if (themeToggle) {
+
     themeToggle.addEventListener("click", () => {
-      const currentState = store.getState();
-      const nextTheme = currentState.theme === "dark" ? "light" : "dark";
-      
-      store.dispatch({
-        type: "SET_THEME",
-        payload: nextTheme
-      });
+
+      const state = store.getState();
+
+      const nextTheme =
+        state.theme === "dark"
+          ? "light"
+          : "dark";
+
+
+      store.updateState(
+        ["theme"],
+        nextTheme
+      );
+
     });
+
   }
 
-  // 3. TOOGLE SIDEBAR SOU MOBIL (Sidebar Mobile Toggle)
+
+  // 3. MOBILE SIDEBAR
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");
   const sidebarScrim = document.getElementById("sidebarScrim");
 
+
   if (menuToggle && sidebar && sidebarScrim) {
+
     const toggleSidebar = () => {
       sidebar.classList.toggle("is-open");
       sidebarScrim.classList.toggle("is-active");
     };
 
-    menuToggle.addEventListener("click", toggleSidebar);
-    sidebarScrim.addEventListener("click", toggleSidebar);
+
+    menuToggle.addEventListener(
+      "click",
+      toggleSidebar
+    );
+
+
+    sidebarScrim.addEventListener(
+      "click",
+      toggleSidebar
+    );
+
   }
 
-  // 4. CHOCHÒK MISYON YO (Mission Checkboxes)
-  const missionList = document.getElementById("missionList");
-  if (missionList) {
-    missionList.addEventListener("click", (e) => {
-      const checkBtn = e.target.closest(".check");
-      if (!checkBtn) return;
 
-      const item = checkBtn.closest(".mission-item");
+
+  // 4. MISSION CHECKBOX
+  const missionList = document.getElementById("missionList");
+
+
+  if (missionList) {
+
+    missionList.addEventListener("click", (e) => {
+
+      const check = e.target.closest(".check");
+
+      if (!check) return;
+
+
+      const item = check.closest(".mission-item");
+
       if (!item) return;
 
-      const missionId = parseInt(item.getAttribute("data-id"), 10);
-      const currentState = store.getState();
-      
-      const updatedMissions = currentState.missions.map(m => {
-        if (m.id === missionId) {
-          return { ...m, done: !m.done };
+
+      const id = Number(item.dataset.id);
+
+
+      const state = store.getState();
+
+
+      const missions = state.missions.map(mission => {
+
+        if (mission.id === id) {
+
+          return {
+            ...mission,
+            done: !mission.done
+          };
+
         }
-        return m;
+
+        return mission;
+
       });
 
-      store.dispatch({
-        type: "UPDATE_MISSIONS",
-        payload: updatedMissions
-      });
+
+      store.updateState(
+        ["missions"],
+        missions
+      );
+
+
     });
+
   }
 
-  // 5. KREYE YON NOUVO TASK (New Task Button)
+
+
+  // 5. NEW TASK BUTTON
+
   const newTaskBtn = document.getElementById("newTaskBtn");
+
+
   if (newTaskBtn) {
-    newTaskBtn.addEventListener("click", () => {
-      const taskTitle = prompt("Ki nouvo misyon pou jodi a?");
-      if (!taskTitle || taskTitle.trim() === "") return;
 
-      const currentState = store.getState();
-      const newId = currentState.missions.length > 0 
-        ? Math.max(...currentState.missions.map(m => m.id)) + 1 
-        : 1;
+    newTaskBtn.addEventListener(
+      "click",
+      () => {
 
-      const newMission = {
-        id: newId,
-        title: taskTitle.trim(),
-        meta: `Custom · ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
-        done: false
-      };
+        const title = prompt(
+          "Ki nouvo misyon pou jodi a?"
+        );
 
-      store.dispatch({
-        type: "UPDATE_MISSIONS",
-        payload: [...currentState.missions, newMission]
-      });
-    });
+
+        if (!title || title.trim() === "") {
+          return;
+        }
+
+
+        const state = store.getState();
+
+
+        const missions = state.missions || [];
+
+
+        const newId =
+          missions.length
+            ? Math.max(...missions.map(m => m.id)) + 1
+            : 1;
+
+
+
+        const newMission = {
+
+          id: newId,
+
+          title: title.trim(),
+
+          meta:
+            `Custom · ${new Date().toLocaleTimeString([], {
+              hour:"2-digit",
+              minute:"2-digit"
+            })}`,
+
+          done:false
+
+        };
+
+
+
+        store.updateState(
+          ["missions"],
+          [
+            ...missions,
+            newMission
+          ]
+        );
+
+
+      }
+    );
+
   }
+
 }
