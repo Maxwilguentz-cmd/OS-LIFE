@@ -21,10 +21,11 @@ export const INITIAL_STATE = {
     temp: 29
   },
 
-  mood: {
-    current: "okay",
-    note: "A neutral day. Pace yourself and take breaks when needed."
-  },
+mood: {
+  current: "okay",
+  note: "A neutral day. Pace yourself and take breaks when needed.",
+  lastUpdated: "2026-07-16T00:00:00.000Z"
+},
 
   tasks: [
     {
@@ -65,16 +66,21 @@ export const INITIAL_STATE = {
     week: []
   },
 
-  projects: [
-    {
-      id: "project_01",
-      name: "LifeOS Dashboard",
-      description: "Sistèm pèsonèl pou jere pwodiktivite ak analiz done",
-      status: "active",
-      createdAt: "2026-07-16T00:00:00.000Z",
-      updatedAt: "2026-07-16T00:00:00.000Z"
-    }
-  ],
+projects: [
+  {
+    id: "project_01",
+    name: "LifeOS Dashboard",
+    description: "Sistèm pèsonèl pou jere pwodiktivite ak analiz done",
+    status: "active",
+    progress: 15,
+    tasksCount: {
+      total: 3,
+      completed: 1
+    },
+    createdAt: "2026-07-16T00:00:00.000Z",
+    updatedAt: "2026-07-16T00:00:00.000Z"
+  }
+],
 
   finance: {
     savings: {
@@ -100,19 +106,40 @@ export const INITIAL_STATE = {
   learningProgress: [],
   habits: [],
 
-  weeklyStats: {
-    data: [
-      { day: "Mon", hours: 4.2 },
-      { day: "Tue", hours: 5.1 },
-      { day: "Wed", hours: 3.4 },
-      { day: "Thu", hours: 4.8 },
-      { day: "Fri", hours: 5.6 },
-      { day: "Sat", hours: 2.1 },
-      { day: "Sun", hours: 2.3 }
-    ]
-  },
+weeklyStats: {
+  data: [
+    { day:"Mon", hours:4.2 },
+    { day:"Tue", hours:5.1 },
+    { day:"Wed", hours:3.4 },
+    { day:"Thu", hours:4.8 },
+    { day:"Fri", hours:5.6 },
+    { day:"Sat", hours:2.1 },
+    { day:"Sun", hours:2.3 }
+  ],
+
+  focusedHours: 27.5,
+  tasksDone: 12,
+  comparisonPct: "+8%",
+
+  days:[
+    { label:"Mon", value:60 },
+    { label:"Tue", value:75 },
+    { label:"Wed", value:45 },
+    { label:"Thu", value:70 },
+    { label:"Fri", value:90 },
+    { label:"Sat", value:35 },
+    { label:"Sun", value:40 }
+  ],
+
+  totalHoursThisWeek:27.5,
+  averageHoursPerDay:3.9
+},
 
   notifications: [],
   reports: {},
-  settings: {}
+settings:{
+  syncIntervalMinutes:15,
+  enableNotifications:true,
+  backupOnExit:true
+}
 };
