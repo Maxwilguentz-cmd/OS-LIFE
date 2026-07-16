@@ -5,43 +5,49 @@
  */
 
 export const INITIAL_STATE = {
-  // Pwofil itilizatè a pou Sidebar ak kat yo
-  profile: {
-    name: "User",
-    role: "Member",
-    avatar: "U",
-    email: ""
+  // Tèm nan rasin lan pou match state.theme
+  theme: "dark", 
+
+  // Pwofil itilizatè a (Mache ak state.user)
+  user: {
+    name: "Wilguentz",
+    role: "Free plan",
+    streak: 0,
+    temp: "--",
+    location: "Haiti"
   },
 
   // Eta imè pou jounen an
   mood: {
     current: null, // "great" | "good" | "okay" | "low" | null
-    lastUpdated: null,
-    history: [] // Istorik imè yo { date, value }
+    note: ""
   },
 
-  // Lis travay (Tasks) pou rann nan kat "Today's mission" ak paj "Tasks" la
-  tasks: [],
+  // Lis misyon yo (Mache ak state.missions)
+  missions: [],
 
-  // Objektif jeneral itilizatè a
-  goals: [],
-
-  // Pwojè aktif ak pwogrè yo
+  // Pwojè aktif yo (Mache ak state.projects)
   projects: [],
+
+  // Swivi sou sa k ap aprann yo (Mache ak state.learning)
+  learning: [],
 
   // Depatman finans, ekonomi ak tranzaksyon yo
   finance: {
-    savings: {
-      current: 0,
-      goal: 0,
-      goalName: "General Savings",
-      currency: "HTG"
-    },
     transactions: [], // Istorik tranzaksyon yo { id, type, amount, category, date }
     monthlyBudget: 0
   },
 
-  // Plan entènèt aktif la (Sèlman chan orijinal internetService yo)
+  // Savings yo nan rasin lan pou matche state.savings nan render.js 100%
+  savings: {
+    current: 0,
+    goal: 0, // Itilize 'goal' (pa 'target') pou matche financeService.js egzakteman
+    goalName: "General Savings",
+    monthlyContribution: 0,
+    targetDate: ""
+  },
+
+  // Plan entènèt aktif la (SÈLMAN chan orijinal internetService.js yo)
   internetPlan: {
     provider: "Unknown Provider",
     totalGB: 0,
@@ -52,34 +58,29 @@ export const INITIAL_STATE = {
     isActive: false
   },
 
-  // Swivi sou sa k ap aprann yo (Learning path)
-  learningProgress: [],
-
-  // Abitid chak jou (Habits)
-  habits: [],
-
-  // Estatistik pou graf ak analiz chak semèn
+  // Estatistik pou graf ak analiz chak semèn (Mache ak state.weeklyStats)
   weeklyStats: {
-    focusedTime: "0h",
+    focusedHours: "0h",
     tasksDone: 0,
-    trend: "+0%", // Konparasyon ak semèn pase
-    dailyDistribution: [0, 0, 0, 0, 0, 0, 0] // Lendi pou Dimanch
+    comparisonPct: "+0%", 
+    days: [
+      { label: "Mon", value: 0 },
+      { label: "Tue", value: 0 },
+      { label: "Wed", value: 0 },
+      { label: "Thu", value: 0 },
+      { label: "Fri", value: 0 },
+      { label: "Sat", value: 0 },
+      { label: "Sun", value: 0 }
+    ]
   },
 
-  // Notifikasyon sistèm yo
-  notifications: [],
-
-  // Rapò estatistik yo
-  reports: [],
-
-  // Anviwònman ak konfigirasyon aplikasyon an (Theme, kreyòl/franse, etc.)
+  // Anviwònman ak konfigirasyon aplikasyon an 
   settings: {
-    theme: "dark", // "dark" | "light"
     language: "en",
     notificationsEnabled: true
   },
 
-  // Meta-done sistèm lan pou versioning ak middleware persistence la
+  // Meta-done sistèm lan pou versioning
   meta: {
     version: "1.0.0",
     updatedAt: new Date().toISOString()
