@@ -12,6 +12,13 @@ const DAY_ARC_REFRESH_MS = 60000;
 const NOTIFICATION_CHECK_MS = 300000;
 
 
+// Selektè pou evite re-render initil lè se sèlman meta.updatedAt ki chanje
+const selectRenderableState = (state) => {
+    const { meta, ...rest } = state;
+    return rest;
+};
+
+
 function init(){
 
     // Persistence middleware
@@ -22,9 +29,9 @@ function init(){
     renderAll(store.getState());
 
 
-    // React only when state changes
+    // React only when renderable state changes
     store.subscribeSelector(
-        state => state,
+        selectRenderableState,
         (newState)=>{
             renderAll(newState);
         }
