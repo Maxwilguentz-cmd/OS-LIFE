@@ -194,19 +194,16 @@ export function restoreDashboardView() {
   }
 }
 
-// Sipòte retou otomatik si sistèm navigasyon an tounen sou dashboard la
+// Abònman sou store a pou mete ajou lis misyon an lè gen chanjman pandan nou sou paj tasks la
 store.subscribe((state) => {
   const activeRouteItem = document.querySelector(".nav-item.is-active");
   if (activeRouteItem) {
     const activeRoute = activeRouteItem.getAttribute("data-route");
     if (activeRoute === "tasks") {
-      // Re-render lis la si nou sou paj tasks la pou chanjman yo parèt dirèkteman
       const tasksListContainer = document.getElementById("tasksListContainer");
       if (tasksListContainer) {
         tasksListContainer.innerHTML = generateMissionsListHTML(state.missions);
       }
-    } else if (activeRoute === "dashboard") {
-      restoreDashboardView();
     }
   }
 });
