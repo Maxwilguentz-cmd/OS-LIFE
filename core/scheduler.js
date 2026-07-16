@@ -69,8 +69,8 @@ export const scheduler = {
     let overdueCount = 0;
 
     missions.forEach(mission => {
-      // Nou tcheke sèlman misyon ki poko fèt epi ki gen yon lè limit (dueTime format: "HH:MM")
-      if (!mission.completed && mission.dueTime) {
+      // KOREKSYON: Nou tcheke mission.done (pa mission.completed) pou matche ak estrikti ofisyèl la
+      if (!mission.done && mission.dueTime) {
         const [hours, minutes] = mission.dueTime.split(":").map(Number);
         
         const missionDueTime = new Date();
