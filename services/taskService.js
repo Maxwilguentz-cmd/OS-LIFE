@@ -21,7 +21,7 @@ export const taskService = {
    * @returns {number}
    */
   _generateID() {
-    return Date.now();
+    return Date.now() * 1000 + Math.floor(Math.random() * 1000);
   },
 
   /**
@@ -46,7 +46,7 @@ export const taskService = {
       : defaultMetaString;
 
     const newTask = {
-      id: this._generateID(), // Nimewo
+      id: this._generateID(), // Nimewo inik san kolizyon
       title: rawTask.title.trim(),
       done: false,
       dueTime: rawTask.dueTime && typeof rawTask.dueTime === "string" ? rawTask.dueTime.trim() : null,
