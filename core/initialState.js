@@ -35,6 +35,9 @@ export const INITIAL_STATE = {
   // Nouvo slice pou objektif yo
   goals: [],
 
+  // Lis abitid pou swiv yo
+  habits: [],
+
   // Depatman finans, ekonomi ak tranzaksyon yo
   finance: {
     transactions: [], // Istorik tranzaksyon yo { id, type, amount, category, date }
