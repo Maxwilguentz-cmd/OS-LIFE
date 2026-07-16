@@ -22,4 +22,4 @@ function init() {
   setInterval(() => runAutomaticChecks(store.getState()), NOTIFICATION_CHECK_MS);
 }
 
-document.addEventListener('DOMContentLoaded', init); me nouvo a 
+document.addEventListener('DOMContentLoaded', init); 
