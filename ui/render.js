@@ -3,7 +3,9 @@
  * Okipe aktyalizasyon DOM lan baze sou done ki nan Store la
  */
 
-export function render(state) {
+import { internetService } from "./internetService.js";
+
+export function renderAll(state) {
   if (!state) return;
 
   // 1. ANBYANS / TEM (Theme light/dark)
@@ -143,8 +145,8 @@ export function render(state) {
     const savingsGoal = document.querySelector(".savings-goal");
 
     const current = state.savings.current || 0;
-    const target = state.savings.target || 1;
-    const pct = Math.min(Math.round((current / target) * 100), 100);
+    const goal = state.savings.goal || 1;
+    const pct = Math.min(Math.round((current / goal) * 100), 100);
 
     if (savingsPct) {
       savingsPct.textContent = `${pct}%`;
@@ -153,7 +155,7 @@ export function render(state) {
       savingsGoal.textContent = state.savings.goalName || "Savings Goal";
     }
     if (savingsAmounts) {
-      savingsAmounts.innerHTML = `<strong>$${current.toLocaleString()}</strong> <span>of $${target.toLocaleString()}</span>`;
+      savingsAmounts.innerHTML = `<strong>$${current.toLocaleString()}</strong> <span>of $${goal.toLocaleString()}</span>`;
     }
     if (savingsSub) {
       savingsSub.textContent = `+$${state.savings.monthlyContribution} this month · target ${state.savings.targetDate}`;
@@ -182,6 +184,18 @@ export function render(state) {
     const left = Math.max(0, parseFloat((total - used).toFixed(2)));
     const pct = Math.min((used / total) * 100, 100);
 
+    // Kalkil senp pou pri ak dat renouvèlman ki baze sou expirationDate
+    const monthlyBudget = state.internetPlan.monthlyBudget || 0;
+    const priceText = `$${monthlyBudget}/mo`;
+    
+    let renewDateText = "Not scheduled";
+    if (state.internetPlan.expirationDate) {
+      const expDate = new Date(state.internetPlan.expirationDate);
+      renewDateText = expDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    const daysLeft = internetService.calculateDaysRemaining();
+
     if (planBarFill) {
       planBarFill.style.width = `${pct}%`;
     }
@@ -189,16 +203,16 @@ export function render(state) {
       planProvider.textContent = state.internetPlan.provider;
     }
     if (planPrice) {
-      planPrice.textContent = state.internetPlan.price;
+      planPrice.textContent = priceText;
     }
     if (planStats) {
       planStats.innerHTML = `<span><strong>${used}GB</strong> used</span> <span><strong>${left}GB</strong> left</span>`;
     }
     if (planRenew) {
-      planRenew.textContent = `Renews automatically · ${state.internetPlan.renewDate}`;
+      planRenew.textContent = `Renews automatically · ${renewDateText}`;
     }
     if (planTag) {
-      planTag.textContent = `${state.internetPlan.daysLeft} days left`;
+      planTag.textContent = `${daysLeft} days left`;
     }
   }
 
