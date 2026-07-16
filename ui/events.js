@@ -4,6 +4,8 @@
  */
 
 import { store } from "../core/store.js";
+import { taskService } from "../services/taskService.js";
+import { moodService } from "../services/moodService.js";
 
 export function bindGlobalEvents() {
 
@@ -17,12 +19,9 @@ export function bindGlobalEvents() {
       if (!btn) return;
 
       const selectedMood = btn.dataset.mood;
-      const label = btn.dataset.label;
 
-      store.updateState(["mood"], {
-        current: selectedMood,
-        note: `You logged feeling ${label} today. Keep focusing on your goals!`
-      });
+      // Ranplase lojik dirèk store la pa apèl moodService
+      moodService.setMood(selectedMood);
 
     });
   }
@@ -103,30 +102,8 @@ export function bindGlobalEvents() {
       const id = Number(item.dataset.id);
 
 
-      const state = store.getState();
-
-
-      const missions = state.missions.map(mission => {
-
-        if (mission.id === id) {
-
-          return {
-            ...mission,
-            done: !mission.done
-          };
-
-        }
-
-        return mission;
-
-      });
-
-
-      store.updateState(
-        ["missions"],
-        missions
-      );
-
+      // Ranplase lojik .map() ak store.updateState la pa apèl taskService
+      taskService.toggleTask(id);
 
     });
 
@@ -155,45 +132,8 @@ export function bindGlobalEvents() {
         }
 
 
-        const state = store.getState();
-
-
-        const missions = state.missions || [];
-
-
-        const newId =
-          missions.length
-            ? Math.max(...missions.map(m => m.id)) + 1
-            : 1;
-
-
-
-        const newMission = {
-
-          id: newId,
-
-          title: title.trim(),
-
-          meta:
-            `Custom · ${new Date().toLocaleTimeString([], {
-              hour:"2-digit",
-              minute:"2-digit"
-            })}`,
-
-          done:false
-
-        };
-
-
-
-        store.updateState(
-          ["missions"],
-          [
-            ...missions,
-            newMission
-          ]
-        );
-
+        // Ranplase kreyasyon manyèl la pa apèl taskService
+        taskService.addTask({ title: title.trim() });
 
       }
     );
