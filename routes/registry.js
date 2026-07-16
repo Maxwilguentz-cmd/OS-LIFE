@@ -3,6 +3,7 @@
  * Jere navigasyon ant diferan modil yo san reload paj la.
  */
 import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
+import { bindGlobalEvents } from "../ui/events.js";
 import { store } from "../core/store.js";
 
 // 1. Lis tout wout (routes) ki disponib nan aplikasyon an
@@ -12,6 +13,7 @@ export const routesRegistry = {
     title: "Tableau de Bord",
     init: (state) => {
       restoreDashboardView();
+      bindGlobalEvents(); // Re-atache tout koute yo paske innerHTML te detwi yo
     }
   },
   tasks: {
