@@ -41,7 +41,7 @@ export const INITIAL_STATE = {
     monthlyBudget: 0
   },
 
-  // Plan entènèt aktif la (Jan sa te ye nan index.html la)
+  // Plan entènèt aktif la (Sèlman chan orijinal internetService yo)
   internetPlan: {
     provider: "Unknown Provider",
     totalGB: 0,
