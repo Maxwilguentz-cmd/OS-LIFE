@@ -143,7 +143,8 @@ export function render(state) {
     const savingsGoal = document.querySelector(".savings-goal");
 
     const current = state.savings.current || 0;
-    const target = state.savings.target || 1;
+    // KOREKSYON BUG 1: Ranplase 'target' pa 'goal' pou koresponn ak initialState ak financeService
+    const target = state.savings.goal || 1;
     const pct = Math.min(Math.round((current / target) * 100), 100);
 
     if (savingsPct) {
@@ -189,7 +190,8 @@ export function render(state) {
       planProvider.textContent = state.internetPlan.provider;
     }
     if (planPrice) {
-      planPrice.textContent = state.internetPlan.price;
+      // KOREKSYON BUG 2: Sèvi ak 'monthlyBudget' olye de 'price' ki pa egziste
+      planPrice.textContent = state.internetPlan.monthlyBudget  ? `$${state.internetPlan.monthlyBudget}/mo`  : "--";
     }
     if (planStats) {
       planStats.innerHTML = `<span><strong>${used}GB</strong> used</span> <span><strong>${left}GB</strong> left</span>`;
@@ -213,7 +215,8 @@ export function render(state) {
             <span class="project-name">${proj.name}</span>
             <span class="project-pct">${proj.pct}%</span>
           </div>
-          <div class="progress-track"><div class="progress-fill" style="--val:${proj.pct}%; --pc:${proj.color}"></div></div>
+          <!-- KOREKSYON BUG 4 (proje): Sèvi ak 'width' dirèkteman olye de '--val' CSS variable -->
+          <div class="progress-track"><div class="progress-fill" style="width:${proj.pct}%; --pc:${proj.color}"></div></div>
         </div>
       </div>
     `).join('');
@@ -228,7 +231,8 @@ export function render(state) {
           <span class="learning-name">${learn.name}</span>
           <span class="learning-pct">${learn.pct}%</span>
         </div>
-        <div class="progress-track"><div class="progress-fill" style="--val:${learn.pct}%; --pc:${learn.color}"></div></div>
+        <!-- KOREKSYON BUG 4 (learning): Sèvi ak 'width' dirèkteman olye de '--val' CSS variable -->
+        <div class="progress-track"><div class="progress-fill" style="width:${learn.pct}%; --pc:${learn.color}"></div></div>
         <span class="learning-meta">${learn.meta}</span>
       </div>
     `).join('');
@@ -246,12 +250,13 @@ export function render(state) {
     }
 
     if (weeklyBars && state.weeklyStats.days) {
+      // KOREKSYON BUG 3: Sèvi ak .bar-track, .bar-fill, height ak klas .is-today pou koresponn ak dashboard.css
       weeklyBars.innerHTML = state.weeklyStats.days.map(day => `
         <div class="bar-col">
-          <div class="bar-val" style="--val:${day.value}%">
-            <span class="bar-tooltip">${day.value}%</span>
+          <div class="bar-track">
+            <div class="bar-fill${day.isToday ? ' is-today' : ''}" style="height:${day.value}%"></div>
           </div>
-          <span class="bar-day">${day.label}</span>
+          <span class="bar-day${day.isToday ? ' is-today' : ''}">${day.label}</span>
         </div>
       `).join('');
     }
