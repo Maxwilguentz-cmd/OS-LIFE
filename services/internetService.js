@@ -19,8 +19,16 @@ export const internetService = {
       activationDate: null,
       expirationDate: null,
       monthlyBudget: 0,
-      isActive: false
+      isActive: false,
+      daysLeft: 0
     };
+  },
+
+  /**
+   * Senkronize epi sove kantite jou ki rete yo nan store la
+   */
+  syncDaysLeft() {
+    store.updateState(["internetPlan", "daysLeft"], this.calculateDaysRemaining());
   },
 
   /**
@@ -63,8 +71,11 @@ export const internetService = {
       activationDate: now.toISOString(),
       expirationDate: expiration.toISOString(),
       monthlyBudget: this.getInternetPlan().monthlyBudget,
-      isActive: true
+      isActive: true,
+      daysLeft: durationDays
     });
+
+    this.syncDaysLeft();
   },
 
   /**
@@ -83,6 +94,7 @@ export const internetService = {
     }
 
     store.updateState(["internetPlan", "usedGB"], parsedUsed);
+    this.syncDaysLeft();
   },
 
   /**
@@ -103,6 +115,7 @@ export const internetService = {
     }
 
     store.updateState(["internetPlan", "usedGB"], newUsage);
+    this.syncDaysLeft();
   },
 
   /**
@@ -156,8 +169,10 @@ export const internetService = {
 
     if (plan.expirationDate && new Date() > new Date(plan.expirationDate)) {
       store.updateState(["internetPlan", "isActive"], false);
+      this.syncDaysLeft();
       return true;
     }
+    this.syncDaysLeft();
     return false;
   },
 
