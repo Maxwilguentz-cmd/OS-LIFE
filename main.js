@@ -1,37 +1,67 @@
-import { store } from './core/store.js';
-import { persistence } from './core/persistence.js';
-import { notify } from './core/notify.js';
-import { runAutomaticChecks } from './core/scheduler.js';
-import { renderAll, renderDayArc } from './ui/render.js';
-import { bindGlobalEvents } from './ui/events.js';
+import { store } from "./core/store.js";
+import { persistence } from "./core/persistence.js";
+import { notify } from "./core/notify.js";
+import { runAutomaticChecks } from "./core/scheduler.js";
 
-const DAY_ARC_REFRESH_MS = 60 * 1000;
-const NOTIFICATION_CHECK_MS = 5 * 60 * 1000;
+import { renderAll } from "./ui/render.js";
+import { bindGlobalEvents } from "./ui/events.js";
 
-function init() {
 
-  // 1. Konekte persistence pou chaje/sove done yo
-  store.use(persistence.middleware);
+const DAY_ARC_REFRESH_MS = 60000;
+const NOTIFICATION_CHECK_MS = 300000;
 
-  // 2. Koute tout chanjman store pou mete UI ajou otomatikman
-  store.subscribe(state => renderAll(state));
 
-  // 3. Premye render ak done aktyèl yo
-  renderAll(store.getState());
+function init(){
 
-  // 4. Konekte aksyon itilizatè yo
-  bindGlobalEvents();
+    // Persistence middleware
+    store.use(persistence.middleware);
 
-  // 5. Sistèm notifikasyon ak scheduler
-  notify.requestBrowserPermission();
 
-  runAutomaticChecks(store.getState());
+    // Initial UI render
+    renderAll(store.getState());
 
-  setInterval(renderDayArc, DAY_ARC_REFRESH_MS);
 
-  setInterval(() => {
+    // React only when state changes
+    store.subscribeSelector(
+        state => state,
+        (newState)=>{
+            renderAll(newState);
+        }
+    );
+
+
+    // User interactions
+    bindGlobalEvents();
+
+
+    // Notifications
+    notify.requestBrowserPermission();
+
+
+    // Automatic system checks
     runAutomaticChecks(store.getState());
-  }, NOTIFICATION_CHECK_MS);
+
+
+    // Refresh time arc
+    setInterval(()=>{
+        renderAll(store.getState());
+    }, DAY_ARC_REFRESH_MS);
+
+
+    // Scheduler
+    setInterval(()=>{
+
+        runAutomaticChecks(
+            store.getState()
+        );
+
+    }, NOTIFICATION_CHECK_MS);
+
 }
 
-document.addEventListener("DOMContentLoaded", init);
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
