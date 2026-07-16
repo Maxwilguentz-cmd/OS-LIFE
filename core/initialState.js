@@ -7,11 +7,11 @@ import { INITIAL_STATE } from "./initialState.js";
 
 // Sekirite pou asire structuredClone pa plante si browser a gen limit oswa sou ansyen vèsyon
 function safeClone(obj) {
-  try {
+  if (typeof structuredClone === "function") {
     return structuredClone(obj);
-  } catch (e) {
-    return JSON.parse(JSON.stringify(obj));
   }
+
+  return JSON.parse(JSON.stringify(obj));
 }
 
 // Pwoteksyon kont null, paske typeof null === "object"
@@ -129,7 +129,9 @@ class Store {
     this._notify();
   }
 
-
+const nextState = {
+  ...updateNested(this.state, pathArray, value)
+};
   updateState(path, value) {
     const pathArray = Array.isArray(path) ? path : [path];
 
