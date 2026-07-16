@@ -182,11 +182,16 @@ class Store {
       };
     };
 
-    try {
-      // updateNested ap fè kopi pasyèl (shallow copy) sou nivo n ap modifye yo sèlman pou pèfòmans.
-const nextState = {
-  ...updateNested(this.state, pathArray, value)
-};
+try {
+  // updateNested ap fè kopi pasyèl (shallow copy) sou nivo n ap modifye yo sèlman pou pèfòmans.
+  const nextState = {
+    ...updateNested(this.state, pathArray, value)
+  };
+
+  nextState.meta = {
+    ...this.state.meta,
+    updatedAt: new Date().toISOString()
+  };
       nextState.meta = {
         ...this.state.meta,
         updatedAt: new Date().toISOString()
