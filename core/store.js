@@ -157,7 +157,7 @@ export const internetService = {
    */
   checkExpiration() {
     const plan = this.getInternetPlan();
-    if (!plan.isActive) return true;
+    if (!plan.isActive) return false;
 
     if (plan.expirationDate && new Date() > new Date(plan.expirationDate)) {
       store.updateState(["internetPlan", "isActive"], false);
