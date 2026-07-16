@@ -53,7 +53,7 @@ export const INITIAL_STATE = {
     targetDate: ""
   },
 
-  // Plan entènèt aktif la (SÈLMAN chan orijinal internetService.js yo)
+  // Plan entènèt aktif la (SÈLMAN chan orijinal internetService.js yo + daysLeft)
   internetPlan: {
     provider: "Unknown Provider",
     totalGB: 0,
@@ -61,7 +61,8 @@ export const INITIAL_STATE = {
     activationDate: null,
     expirationDate: null,
     monthlyBudget: 0,
-    isActive: false
+    isActive: false,
+    daysLeft: 0
   },
 
   // Estatistik pou graf ak analiz chak semèn (Mache ak state.weeklyStats)
