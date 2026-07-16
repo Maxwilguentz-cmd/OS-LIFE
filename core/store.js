@@ -67,7 +67,7 @@ class Store {
 
 
   getState() {
-    return structuredClone(this.state);
+    return { ...this.state };
   }
 
 
