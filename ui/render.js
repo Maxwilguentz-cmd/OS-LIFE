@@ -3,7 +3,7 @@
  * Okipe aktyalizasyon DOM lan baze sou done ki nan Store la
  */
 
-export function render(state) {
+export function renderAll(state) {
   if (!state) return;
 
   // 1. ANBYANS / TEM (Theme light/dark)
