@@ -21,7 +21,7 @@ export const goalsService = {
    * @returns {number}
    */
   _generateID() {
-    return Date.now();
+    return Date.now() * 1000 + Math.floor(Math.random() * 1000);
   },
 
   /**
@@ -43,7 +43,7 @@ export const goalsService = {
     }
 
     const newGoal = {
-      id: this._generateID(), // Nimewo (Date.now())
+      id: this._generateID(), // Nimewo inik san kolizyon
       title: rawGoal.title.trim(),
       targetDate: rawGoal.targetDate ? new Date(rawGoal.targetDate).toISOString() : null,
       progress: initialProgress,
