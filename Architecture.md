@@ -1,58 +1,235 @@
+# LifeOS — Architecture
+
+## Project Structure
+
+
 lifeos/
-├── ARCHITECTURE.md          # Dokimantasyon teknik sou fason modil yo kominike
-├── main.js                  # Pwen antre prensipal (Inisyalizasyon aplikasyon an)
+├── ARCHITECTURE.md # Dokimantasyon teknik sou fason sistèm nan mache
+├── main.js # Pwen antre aplikasyon an (init system)
 │
-├── core/                    # Kè sistèm nan (Logiciel, Done, ak Pèsistans)
-│   ├── store.js             # State Manager santralize. Jere eta aplikasyon an, imutabilite, subscriptions, ak middleware (store.use). Pa jere LocalStorage dirèkteman.
-│   ├── initialState.js      # Done ak estrikti pa defo pou chak tranche (slice)
-│   ├── persistence.js       # Middleware pou otomatikman chaje ak sove done nan LocalStorage. Jere schema version ak migrasyon done.
-│   ├── backup.js            # Lojik pou Enpòte / Espòte fichye backup JSON
-│   ├── scheduler.js         # Planifikatè travay otomatik (cron-like pou chanjman jou, alèt, verifikasyon)
-│   └── notify.js            # Sistèm alèt ak notifikasyon entèn
+├── core/ # Kè aplikasyon an (State, Persistence, System)
+│ ├── store.js # State manager santralize (pa jere LocalStorage dirèk)
+│ ├── initialState.js # Estrikti done default aplikasyon an
+│ ├── persistence.js # Middleware pou LocalStorage + migrations
+│ ├── backup.js # Export / Import JSON backup
+│ ├── scheduler.js # Tcheke otomatik (dat, deadline, alert)
+│ └── notify.js # Sistèm notifikasyon
 │
-├── services/                # Kouch sèvis yo (Business Logic)
-│   ├── taskService.js       # Sèvis pou jere travay (tasks)
-│   ├── goalsService.js      # Sèvis pou jere objektif (goals)
-│   ├── moodService.js       # Sèvis pou swiv imè ak emosyon (mood)
-│   ├── habitsService.js     # Sèvis pou jere abitid chak jou (habits)
-│   ├── financeService.js    # Sèvis pou jere tranzaksyon ak bidjè (finance)
-│   ├── internetService.js   # Sèvis pou swiv konsomasyon plan entènèt (internet)
-│   └── learningService.js   # Sèvis pou swiv kou ak tan aprantisaj (learning)
+├── services/ # Business Logic
+│ ├── taskService.js # Jesyon travay
+│ ├── goalsService.js # Jesyon objektif
+│ ├── moodService.js # Jesyon imè
+│ ├── habitsService.js # Jesyon abitid
+│ ├── financeService.js # Jesyon lajan ak bidjè
+│ ├── internetService.js # Jesyon plan entènèt
+│ └── learningService.js # Jesyon aprantisaj
 │
-├── routes/                  # Kouch routage pou navigasyon ant modil yo
-│   └── registry.js          # Rejis ki deklare tout paj/modil ki disponib yo
+├── routes/
+│ └── registry.js # Lis tout paj/modil aplikasyon an
 │
-└── ui/                      # Kouch koòdone grafik (San renderAll total)
-    ├── render.js            # Rann pasyèl ak dinamik konpozan yo selon chanjman nan store
-    └── events.js            # Koutè evènman pou aksyon itilizatè yo sou ekran an
+└── ui/
+├── render.js # Render konpozan yo selon store la
+└── events.js # Koutè bouton ak aksyon itilizatè
 
 
-## Data Flow
+# Core System
 
-UI
- ↓
-Services
- ↓
-Store
- ↓
-Persistence Middleware
- ↓
+## Store
+
+`core/store.js` se sous verite aplikasyon an.
+
+Li responsab pou:
+
+- Kenbe tout state aplikasyon an
+- Fè update done yo
+- Notifye modil ki bezwen konnen chanjman yo
+- Sipòte middleware
+
+Store la **pa dwe janm kominike dirèkteman ak LocalStorage**.
+
+Persistence fèt atravè:
+
+
+store
+|
+| middleware
+↓
+persistence.js
+|
+↓
 LocalStorage
 
 
-## Store Architecture
+---
 
-- store.js se sèl sous verite pou tout done aplikasyon an.
-- Tout sèvis yo kominike ak done yo atravè store la.
-- UI pa modifye store dirèkteman.
-- Services yo fè chanjman nan done yo.
-- store.use() pèmèt konekte middleware tankou persistence.
-- Persistence responsab pou sove ak chaje done yo.
+# Data Flow
 
 
-## Persistence System
+User Action
 
-- LocalStorage pa dwe itilize dirèkteman nan store.js.
-- persistence.js jere tout operasyon sove/chaje.
-- Sistèm nan sipòte schema version pou migrasyon pita.
-- Backup JSON rete separe ak persistence otomatik la.
+ ↓
+
+UI Events
+
+ ↓
+
+Service Layer
+
+ ↓
+
+Store Update
+
+ ↓
+
+Subscribers
+
+ ↓
+
+UI Render
+
+
+Egzanp:
+
+
+User ajoute depans
+
+↓
+financeService.addExpense()
+
+↓
+store.updateState()
+
+↓
+finance data chanje
+
+↓
+Finance UI refresh
+
+
+---
+
+# State Management
+
+Tout done aplikasyon an rete nan yon sèl store:
+
+
+state
+├── profile
+├── mood
+├── tasks
+├── goals
+├── projects
+├── finance
+├── internetPlan
+├── learningProgress
+├── habits
+├── weeklyStats
+├── notifications
+├── reports
+└── settings
+
+
+Chak kategori se yon "slice".
+
+---
+
+# Rendering System
+
+Sistèm nan pa itilize:
+
+
+renderAll()
+
+
+pou chak ti chanjman.
+
+Li itilize:
+
+
+subscribeSelector()
+
+
+pou sèlman mete ajou pati ki chanje yo.
+
+Egzanp:
+
+Task chanje:
+
+
+tasks slice
+↓
+Task UI refresh
+
+
+Finance pa bezwen rechaje.
+
+---
+
+# Persistence System
+
+`persistence.js` responsab:
+
+- Save otomatik
+- Load done
+- Version schema
+- Migration
+
+Store la rete endepandan.
+
+---
+
+# Backup System
+
+`backup.js` responsab:
+
+- Export JSON
+- Import JSON
+- Restore done itilizatè
+
+---
+
+# Services Layer
+
+UI pa janm modifye state dirèkteman.
+
+Move:
+
+
+button
+↓
+store.updateState()
+
+
+Bon:
+
+
+button
+↓
+service
+↓
+store
+
+
+---
+
+# Future Modules
+
+Architecture la pare pou:
+
+- Dashboard
+- Tasks
+- Goals
+- Projects
+- Learning
+- Finance
+- Internet
+- Habits
+- Reports
+- Settings
+
+Ajoute yon nouvo paj vle di:
+
+1. Kreye service li
+2. Kreye UI li
+3. Konekte li ak store selector
+4. Ajoute route la
