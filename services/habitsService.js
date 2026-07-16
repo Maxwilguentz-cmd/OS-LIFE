@@ -26,7 +26,7 @@ export const habitsService = {
     }
 
     const newHabit = {
-      id: Date.now(),
+      id: Date.now() * 1000 + Math.floor(Math.random() * 1000), // Nimewo inik san kolizyon
       name: rawHabit.name.trim(),
       streak: 0,
       history: [],
@@ -188,6 +188,6 @@ export const habitsService = {
 };
 
 /**
- * Ekspòtasyon fonksyon endividyèl yo pou fasilite enpòtasyon dirèk nan rès sistèm lan
+ * 'Ekspòtasyon fonksyon endividyèl yo pou fasilite enpòtasyon dirèk nan rès sistèm lan
  */
 export const { getHabits, addHabit, markHabitDone, unmarkHabitDone, removeHabit } = habitsService;
