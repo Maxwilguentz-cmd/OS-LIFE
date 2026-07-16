@@ -101,9 +101,9 @@ export function renderAll(state) {
     moodButtons.forEach(btn => {
       const moodValue = btn.getAttribute("data-mood");
       if (state.mood.current === moodValue) {
-        btn.classList.add("is-active");
+        btn.classList.add("is-selected");
       } else {
-        btn.classList.remove("is-active");
+        btn.classList.remove("is-selected");
       }
     });
   }
