@@ -192,13 +192,9 @@ try {
     ...this.state.meta,
     updatedAt: new Date().toISOString()
   };
-      nextState.meta = {
-        ...this.state.meta,
-        updatedAt: new Date().toISOString()
-      };
 
-      this.state = nextState;
-      this._notify();
+  this.state = nextState;
+  this._notify();
     } catch (error) {
       console.error("Store updateState error:", error);
     }
