@@ -405,6 +405,34 @@ button{ font-family: inherit; cursor:pointer; }
 .mission-item.is-done .mission-title{ color: var(--text-tertiary); text-decoration: line-through; }
 .mission-meta{ font-size:0.72rem; color: var(--text-tertiary); font-family: var(--font-mono); margin-top:2px; }
 
+/* ---------- Goals card ---------- */
+.goals-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+.goal-item{
+  display:flex; align-items:center; gap:12px;
+  padding: 10px 12px; border-radius: 13px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  transition: background .18s var(--ease);
+}
+.goal-item:hover{ background: rgba(255,255,255,0.05); }
+.goal-item .check{
+  width:22px; height:22px; border-radius: 7px; flex-shrink:0;
+  border: 1.5px solid var(--border-strong);
+  background: transparent;
+  display:flex; align-items:center; justify-content:center;
+  color: transparent;
+  transition: all .18s var(--ease);
+}
+.goal-item.is-done .check{
+  background: var(--accent-violet); border-color: var(--accent-violet); color:#17130a;
+}
+.goal-item .check svg{ width:12px; height:12px; }
+.goal-copy{ display:flex; flex-direction:column; min-width:0; flex:1; }
+.goal-title{ font-size:0.85rem; font-weight:500; }
+.goal-item.is-done .goal-title{ color: var(--text-tertiary); text-decoration: line-through; }
+.goal-meta{ font-size:0.72rem; color: var(--text-tertiary); font-family: var(--font-mono); margin-top:2px; }
+.goal-pct{ font-family: var(--font-mono); font-size:0.76rem; color: var(--accent-violet); flex-shrink:0; }
+
 /* ---------- 4. Savings card ---------- */
 .savings-body{ display:flex; align-items:center; gap:20px; }
 .ring-wrap{ position:relative; width:100px; height:100px; flex-shrink:0; }
