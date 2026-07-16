@@ -9,15 +9,10 @@ export const INITIAL_STATE = {
     updatedAt: "2026-07-16T00:00:00.000Z"
   },
 
-  // "theme" rete TOP-LEVEL (pa anba profile), paske
-  // events.js ak render.js li/ekri l nan state.theme dirèkteman.
   theme: "dark",
 
-  // "profile" se sèl sous done itilizatè a (ranplase "user").
-  // streak/location/temp ajoute isit paske welcome card
-  // (render.js) bezwen yo pou chips yo (🔥 streak, ☀️ tan/vil).
   profile: {
-    name: "Maxime Wilguentz",
+    name: "Wilguentz",
     role: "Entrepreneur & Computer Specialist",
     streak: 6,
     location: "Pétionville",
@@ -29,9 +24,6 @@ export const INITIAL_STATE = {
     note: "A neutral day. Pace yourself and take breaks when needed."
   },
 
-  // Kenbe "tasks" (pa "missions"). Chan yo aliyen ak sa
-  // render.js/events.js bezwen: id, title, done, meta.
-  // "category" rete kòm metadata siplemantè pou pi devan.
   tasks: [
     {
       id: 1,
@@ -64,18 +56,17 @@ export const INITIAL_STATE = {
 
   projects: [],
 
-  // Pa touche — deja aliyen ak financeService.js
   finance: {
     savings: {
       current: 1240,
-      goal: 3000
+      goal: 3000,
+      goalName: "Emergency Fund",
+      monthlyContribution: 180,
+      targetDate: "Dec 2026"
     },
     transactions: []
   },
 
-  // Aliyen dirèkteman ak modèl internetService.js (dokiman 1,
-  // sa nou kenbe a): provider, totalGB, usedGB, activationDate,
-  // expirationDate, monthlyBudget, isActive.
   internetPlan: {
     provider: "Natcom",
     totalGB: 10,
