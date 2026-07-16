@@ -16,7 +16,9 @@ function safeClone(obj) {
 
 // Pwoteksyon kont null, paske typeof null === "object"
 function isObject(item) {
-  return item && typeof item === "object" && !Array.isArray(item) && item !== null;
+  return item !== null &&
+         typeof item === "object" &&
+         !Array.isArray(item);
 }
 
 // deepMerge optimize pou pa kraze Array, sipòte null epi konsève nouvo done yo kòrèkteman
