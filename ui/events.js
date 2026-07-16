@@ -7,6 +7,7 @@ import { store } from "../core/store.js";
 import { taskService } from "../services/taskService.js";
 import { moodService } from "../services/moodService.js";
 import { goalsService } from "../services/goalsService.js";
+import { themeService } from "../services/themeService.js";
 
 export function bindGlobalEvents() {
 
@@ -35,18 +36,8 @@ export function bindGlobalEvents() {
 
     themeToggle.addEventListener("click", () => {
 
-      const state = store.getState();
-
-      const nextTheme =
-        state.theme === "dark"
-          ? "light"
-          : "dark";
-
-
-      store.updateState(
-        ["theme"],
-        nextTheme
-      );
+      // Nou rele sèvis la kounye a pou respekte achitekti LifeOS la nèt
+      themeService.toggleTheme();
 
     });
 
