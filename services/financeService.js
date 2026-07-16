@@ -18,7 +18,15 @@ export const financeService = {
    * @returns {Object} Done finans yo
    */
   getFinance() {
-    return store.getState().finance || { savings: { current: 0, goal: 0 }, transactions: [] };
+    return store.getState().finance || { transactions: [] };
+  },
+
+  /**
+   * Retounen done ekonomi yo ki nan rasin store la dirèkteman
+   * @returns {Object} Done savings yo
+   */
+  getSavings() {
+    return store.getState().savings || { current: 0, goal: 0, goalName: "General Savings", monthlyContribution: 0, targetDate: "" };
   },
 
   /**
@@ -109,7 +117,7 @@ export const financeService = {
   },
 
   /**
-   * Mete ajou valè ekonomi aktyèl la
+   * Mete ajou valè ekonomi aktyèl la nan rasin store la dirèkteman
    * @param {number} amount - Nouvo montan ekonomi an
    */
   updateSavings(amount) {
@@ -118,11 +126,11 @@ export const financeService = {
       throw new Error("Montan ekonomi an dwe yon chif pozitif.");
     }
 
-    store.updateState(["finance", "savings", "current"], parsedAmount);
+    store.updateState(["savings", "current"], parsedAmount);
   },
 
   /**
-   * Chanje objektif ekonomi an (savings target)
+   * Chanje objektif ekonomi an nan rasin store la dirèkteman
    * @param {number} goal - Nouvo montan objektif la
    */
   setSavingsGoal(goal) {
@@ -131,7 +139,7 @@ export const financeService = {
       throw new Error("Objektif ekonomi an dwe yon chif pozitif.");
     }
 
-    store.updateState(["finance", "savings", "goal"], parsedGoal);
+    store.updateState(["savings", "goal"], parsedGoal);
   },
 
   /**
@@ -151,7 +159,7 @@ export const financeService = {
    */
   getReports() {
     const transactions = this.getFinance().transactions || [];
-    const savings = this.getFinance().savings || { current: 0, goal: 0 };
+    const savings = this.getSavings();
 
     const reports = {
       totalIncome: 0,
