@@ -3,6 +3,7 @@
  * Jere navigasyon ant diferan modil yo san reload paj la.
  */
 import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
+import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
 import { bindGlobalEvents } from "../ui/events.js";
 import { store } from "../core/store.js";
 
@@ -27,7 +28,10 @@ export const routesRegistry = {
   calendar: {
     id: "calendar",
     title: "Calendrier & Routine",
-    init: () => {}
+    init: (state) => {
+      renderCalendarView(state);
+      bindCalendarEvents();
+    }
   },
   finance: {
     id: "finance",
