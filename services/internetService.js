@@ -1,225 +1,175 @@
-import { store } from '../core/store.js';
-
 /**
- * internetService.js
- * 
- * Sèvis sa a jere tout lojik ki gen rapò ak plan entènèt (internetPlan).
- * Li respekte achitekti LifeOS: li pa manyen DOM, li pa manyen LocalStorage dirèkteman,
- * epi tout chanjman pase pa store la.
+ * LifeOS - Internet Service
+ * Jere lojik biznis pou fòfè entènèt la: konsomasyon done, dat ekspirasyon, ak bidjè.
+ * Sèvis sa a pa touche DOM ditou epi li asire entegrite done yo nan store la.
  */
-export const internetService = {
 
+import { store } from "../core/store.js";
+
+export const internetService = {
   /**
-   * Jwenn slice internetPlan an nan store la
-   * @returns {Object} Plan entènèt aktyèl la
+   * Retounen tranch done fòfè entènèt la ki nan store la
+   * @returns {Object} Done fòfè a
    */
   getInternetPlan() {
-    const state = store.getState();
-    return state.internetPlan || {
+    return store.getState().internetPlan || {
       provider: "",
       totalGB: 0,
       usedGB: 0,
-      monthlyBudget: 0,
       activationDate: null,
       expirationDate: null,
-      durationDays: 0,
+      monthlyBudget: 0,
       isActive: false
     };
   },
 
   /**
-   * Chanje oswa mete non founisè sèvis la (Digicel, Natcom, elatriye)
-   * @param {string} provider - Non founisè a
+   * Chanje oswa mete non founisè sèvis la (Provider)
+   * @param {string} provider - Non konpayi an (Natcom, Digicel, elatriye)
    */
   setProvider(provider) {
-    if (!provider || typeof provider !== 'string' || provider.trim() === '') {
-      throw new Error("Non founisè a pa ka vid.");
+    if (!provider || typeof provider !== "string" || provider.trim() === "") {
+      throw new Error("Non founisè a (provider) pa kapab vid.");
     }
-
-    const currentPlan = this.getInternetPlan();
-    
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        provider: provider.trim()
-      }
-    });
+    store.updateState(["internetPlan", "provider"], provider.trim());
   },
 
   /**
-   * Aktive yon nouvo plan entènèt. Li kalkile dat yo otomatikman.
-   * @param {Object} data - Done plan an
-   * @param {number} data.totalGB - Kantite giga total plan an genyen
-   * @param {number} data.durationDays - Kantite jou plan an ap dire (egz: 1, 7, 30)
+   * Aktive yon nouvo fòfè entènèt ak kalkil otomatik pou dat yo
+   * @param {Object} data - Done fòfè a (provider, totalGB, durationDays)
    */
-  activatePlan({ totalGB, durationDays }) {
-    if (typeof totalGB !== 'number' || totalGB <= 0) {
+  activatePlan(data) {
+    const totalGB = parseFloat(data?.totalGB);
+    const durationDays = parseInt(data?.durationDays, 10);
+
+    if (!data?.provider || typeof data.provider !== "string" || data.provider.trim() === "") {
+      throw new Error("Non founisè a (provider) obligatwa pou aktive fòfè a.");
+    }
+    if (isNaN(totalGB) || totalGB <= 0) {
       throw new Error("Kantite GB total la dwe yon chif ki pi gwo pase 0.");
     }
-    if (typeof durationDays !== 'number' || durationDays <= 0) {
-      throw new Error("Kantite jou plan an dwe yon chif ki pi gwo pase 0.");
+    if (isNaN(durationDays) || durationDays <= 0) {
+      throw new Error("Kantite jou fòfè a ap dire a dwe yon chif ki pi gwo pase 0.");
     }
 
-    const currentPlan = this.getInternetPlan();
-    
-    const activationDate = new Date();
-    const expirationDate = new Date();
-    expirationDate.setDate(activationDate.getDate() + durationDays);
+    const now = new Date();
+    const expiration = new Date();
+    expiration.setDate(now.getDate() + durationDays);
 
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        totalGB: totalGB,
-        usedGB: 0, // Reset depi se yon nouvo plan
-        durationDays: durationDays,
-        activationDate: activationDate.toISOString(),
-        expirationDate: expirationDate.toISOString(),
-        isActive: true
-      }
+    store.updateState(["internetPlan"], {
+      provider: data.provider.trim(),
+      totalGB: totalGB,
+      usedGB: 0,
+      activationDate: now.toISOString(),
+      expirationDate: expiration.toISOString(),
+      monthlyBudget: this.getInternetPlan().monthlyBudget,
+      isActive: true
     });
   },
 
   /**
-   * Mete yon valè fiks pou kantite gigabaj (GB) ki konsome
-   * @param {number} usedGB - Nouvo valè konsomasyon an
+   * Ranplase konsomasyon aktyèl la ak yon nouvo valè fiks
+   * @param {number} usedGB - Nouvo kantite GB ki konsome a
    */
   updateUsage(usedGB) {
-    if (typeof usedGB !== 'number' || usedGB < 0) {
-      throw new Error("Konsomasyon GB pa ka yon chif negatif.");
+    const parsedUsed = parseFloat(usedGB);
+    const plan = this.getInternetPlan();
+
+    if (isNaN(parsedUsed) || parsedUsed < 0) {
+      throw new Error("Konsomasyon GB a pa kapab yon chif negatif.");
+    }
+    if (parsedUsed > plan.totalGB) {
+      throw new Error(`Konsomasyon an (${parsedUsed} GB) pa kapab depase limit fòfè a (${plan.totalGB} GB).`);
     }
 
-    const currentPlan = this.getInternetPlan();
-    
-    if (usedGB > currentPlan.totalGB) {
-      throw new Error(`Konsomasyon (${usedGB} GB) pa ka depase limit plan an (${currentPlan.totalGB} GB).`);
-    }
-
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        usedGB: usedGB
-      }
-    });
+    store.updateState(["internetPlan", "usedGB"], parsedUsed);
   },
 
   /**
-   * Ajoute yon valè sou konsomasyon ki te deja la a
-   * @param {number} amountGB - Kantite GB ou vle ajoute sou sa k te konsome deja
+   * Ajoute yon kantite konsomasyon sou sa ki te deja la a
+   * @param {number} amountGB - Kantite GB pou ajoute sou konsomasyon an
    */
   addUsage(amountGB) {
-    if (typeof amountGB !== 'number' || amountGB < 0) {
-      throw new Error("Valè pou ajoute a pa ka negatif.");
+    const parsedAmount = parseFloat(amountGB);
+    if (isNaN(parsedAmount) || parsedAmount < 0) {
+      throw new Error("Kantite GB pou ajoute a pa kapab yon chif negatif.");
     }
 
-    const currentPlan = this.getInternetPlan();
-    const newUsage = currentPlan.usedGB + amountGB;
+    const plan = this.getInternetPlan();
+    const newUsage = plan.usedGB + parsedAmount;
 
-    if (newUsage > currentPlan.totalGB) {
-      throw new Error(`Nouvo konsomasyon an (${newUsage} GB) ap depase limit plan an (${currentPlan.totalGB} GB).`);
+    if (newUsage > plan.totalGB) {
+      throw new Error(`Nouvo konsomasyon sa a ap fè w depase limit fòfè a (${plan.totalGB} GB).`);
     }
 
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        usedGB: newUsage
-      }
-    });
+    store.updateState(["internetPlan", "usedGB"], newUsage);
   },
 
   /**
-   * Remete konsomasyon plan an a zewo (0 GB)
+   * Reyisyalize konsomasyon done a pou mete l a 0
    */
   resetUsage() {
-    const currentPlan = this.getInternetPlan();
-    
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        usedGB: 0
-      }
-    });
+    store.updateState(["internetPlan", "usedGB"], 0);
   },
 
   /**
-   * Kalkile kantite GB ki rete nan plan an
+   * Kalkile kantite done ki rete pou fòfè a fini
    * @returns {number} GB ki rete yo
    */
   calculateRemainingData() {
-    const currentPlan = this.getInternetPlan();
-    const remaining = currentPlan.totalGB - currentPlan.usedGB;
-    return remaining < 0 ? 0 : remaining;
+    const plan = this.getInternetPlan();
+    const remaining = plan.totalGB - plan.usedGB;
+    return Math.max(0, parseFloat(remaining.toFixed(2)));
   },
 
   /**
-   * Kalkile pousantaj konsomasyon an pou Dashboard oswa Rapò yo
+   * Kalkile pousantaj done ki deja konsome
    * @returns {number} Pousantaj ant 0 ak 100
    */
   calculateUsagePercentage() {
-    const currentPlan = this.getInternetPlan();
-    if (currentPlan.totalGB === 0) return 0;
-    
-    const percentage = (currentPlan.usedGB / currentPlan.totalGB) * 100;
-    return Math.round(percentage * 100) / 100; // Kenbe 2 desimal
+    const plan = this.getInternetPlan();
+    if (plan.totalGB <= 0) return 0;
+    const percentage = (plan.usedGB / plan.totalGB) * 100;
+    return Math.min(100, Math.round(percentage));
   },
 
   /**
-   * Kalkile kantite jou ki rete anvan plan an ekspire
-   * @returns {number} Jou ki rete yo (retounen 0 si l ekspire)
+   * Kalkile konbyen jou ki rete anvan fòfè a ekspire
+   * @returns {number} Kantite jou ki rete (si l ekspire, li retounen 0)
    */
   calculateDaysRemaining() {
-    const currentPlan = this.getInternetPlan();
-    if (!currentPlan.expirationDate) return 0;
+    const plan = this.getInternetPlan();
+    if (!plan.expirationDate) return 0;
 
-    const today = new Date();
-    const expiration = new Date(currentPlan.expirationDate);
-    
-    const differenceInTime = expiration.getTime() - today.getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-
-    return differenceInDays < 0 ? 0 : Math.ceil(differenceInDays);
+    const diffTime = new Date(plan.expirationDate) - new Date();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
   },
 
   /**
-   * Tcheke si plan an ekspire. Si dat la fin pase, li mete plan an "isActive = false"
-   * Fonksyon sa a pare pou Scheduler a ka rele l otomatikman.
-   * @returns {boolean} True si plan an ekspire, False si l toujou bon
+   * Verifye si fòfè a ekspire epi mete l "inactive" si se wi
+   * @returns {boolean} True si plan an ekspire, false si li toujou bon
    */
   checkExpiration() {
-    const currentPlan = this.getInternetPlan();
-    if (!currentPlan.isActive || !currentPlan.expirationDate) return false;
+    const plan = this.getInternetPlan();
+    if (!plan.isActive) return false;
 
-    const today = new Date();
-    const expiration = new Date(currentPlan.expirationDate);
-
-    if (today >= expiration) {
-      store.updateState({
-        internetPlan: {
-          ...currentPlan,
-          isActive: false
-        }
-      });
+    if (plan.expirationDate && new Date() > new Date(plan.expirationDate)) {
+      store.updateState(["internetPlan", "isActive"], false);
       return true;
     }
-
     return false;
   },
 
   /**
-   * Mete yon bidjè mansyèl pou depans entènèt (Tracking)
-   * @param {number} amount - Kantite lajan atribiye pou entènèt nan mwa a
+   * Defini bidjè chak mwa pou entènèt la
+   * @param {number} amount - Montan bidjè a
    */
   setMonthlyBudget(amount) {
-    if (typeof amount !== 'number' || amount < 0) {
-      throw new Error("Lajan bidjè a pa ka yon chif negatif.");
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount < 0) {
+      throw new Error("Bidjè a dwe yon chif pozitif.");
     }
-
-    const currentPlan = this.getInternetPlan();
-
-    store.updateState({
-      internetPlan: {
-        ...currentPlan,
-        monthlyBudget: amount
-      }
-    });
+    store.updateState(["internetPlan", "monthlyBudget"], parsedAmount);
   }
 };
