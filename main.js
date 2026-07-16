@@ -1,3 +1,4 @@
+import "./routes/registry.js";
 import { store } from "./core/store.js";
 import { persistence } from "./core/persistence.js";
 import { notify } from "./core/notify.js";
