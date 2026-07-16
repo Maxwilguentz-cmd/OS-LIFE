@@ -2,7 +2,6 @@
  * LifeOS - Initial State
  * Estrikti done default aplikasyon an
  */
-
 export const INITIAL_STATE = {
   meta: {
     version: "1.0.0",
@@ -10,10 +9,19 @@ export const INITIAL_STATE = {
     updatedAt: "2026-07-16T00:00:00.000Z"
   },
 
+  // "theme" rete TOP-LEVEL (pa anba profile), paske
+  // events.js ak render.js li/ekri l nan state.theme dirèkteman.
+  theme: "dark",
+
+  // "profile" se sèl sous done itilizatè a (ranplase "user").
+  // streak/location/temp ajoute isit paske welcome card
+  // (render.js) bezwen yo pou chips yo (🔥 streak, ☀️ tan/vil).
   profile: {
     name: "Maxime Wilguentz",
     role: "Entrepreneur & Computer Specialist",
-    theme: "dark"
+    streak: 6,
+    location: "Pétionville",
+    temp: 29
   },
 
   mood: {
@@ -21,23 +29,29 @@ export const INITIAL_STATE = {
     note: "A neutral day. Pace yourself and take breaks when needed."
   },
 
+  // Kenbe "tasks" (pa "missions"). Chan yo aliyen ak sa
+  // render.js/events.js bezwen: id, title, done, meta.
+  // "category" rete kòm metadata siplemantè pou pi devan.
   tasks: [
     {
-      id: "1",
+      id: 1,
       title: "Review LifeOS Architecture",
-      isDone: true,
+      done: true,
+      meta: "Work · done",
       category: "work"
     },
     {
-      id: "2",
+      id: 2,
       title: "Implement LocalStorage backup",
-      isDone: false,
+      done: false,
+      meta: "Learning",
       category: "learning"
     },
     {
-      id: "3",
+      id: 3,
       title: "Draft internet monitor module",
-      isDone: false,
+      done: false,
+      meta: "Project",
       category: "project"
     }
   ],
@@ -50,6 +64,7 @@ export const INITIAL_STATE = {
 
   projects: [],
 
+  // Pa touche — deja aliyen ak financeService.js
   finance: {
     savings: {
       current: 1240,
@@ -58,18 +73,20 @@ export const INITIAL_STATE = {
     transactions: []
   },
 
+  // Aliyen dirèkteman ak modèl internetService.js (dokiman 1,
+  // sa nou kenbe a): provider, totalGB, usedGB, activationDate,
+  // expirationDate, monthlyBudget, isActive.
   internetPlan: {
     provider: "Natcom",
-    purchaseDate: null,
-    durationDays: 30,
+    totalGB: 10,
+    usedGB: 0,
+    activationDate: null,
     expirationDate: null,
-    gigabytesUsed: 0,
-    gigabytesTotal: 10,
-    monthlyBudget: 0
+    monthlyBudget: 0,
+    isActive: false
   },
 
   learningProgress: [],
-
   habits: [],
 
   weeklyStats: {
@@ -85,8 +102,6 @@ export const INITIAL_STATE = {
   },
 
   notifications: [],
-
   reports: {},
-
   settings: {}
 };
