@@ -1,70 +1,9 @@
 /**
  * LifeOS - Core State Management (Store)
- * Jere tout done aplikasyon an, sovgad nan LocalStorage, ak notifikasyon chanjman yo.
+ * Jere tout done aplikasyon an, notifikasyon chanjman yo, ak sipò pou middleware.
  */
 
-// 1. Estrikti Done Default (Initial State)
-const DEFAULT_STATE = {
-  meta: {
-    version: "1.0.0",
-    createdAt: "2026-07-16T00:00:00.000Z",
-    updatedAt: "2026-07-16T00:00:00.000Z"
-  },
-  profile: {
-    name: "Maxime Wilguentz",
-    role: "Entrepreneur & Computer Specialist",
-    theme: "dark"
-  },
-  mood: {
-    current: "okay", // great, good, okay, low
-    note: "A neutral day. Pace yourself and take breaks when needed."
-  },
-  tasks: [
-    { id: "1", title: "Review LifeOS Architecture", isDone: true, category: "work" },
-    { id: "2", title: "Implement LocalStorage backup", isDone: false, category: "learning" },
-    { id: "3", title: "Draft internet monitor module", isDone: false, category: "project" }
-  ],
-  goals: {
-    year: [],
-    month: [],
-    week: []
-  },
-  projects: [],
-  finance: {
-    savings: {
-      current: 1240,
-      goal: 3000
-    },
-    transactions: []
-  },
-  internetPlan: {
-    provider: "Natcom",
-    purchaseDate: null,
-    durationDays: 30,
-    expirationDate: null,
-    gigabytesUsed: 0,
-    gigabytesTotal: 10,
-    monthlyBudget: 0
-  },
-  learningProgress: [],
-  habits: [],
-  weeklyStats: {
-    data: [
-      { day: 'Mon', hours: 4.2 },
-      { day: 'Tue', hours: 5.1 },
-      { day: 'Wed', hours: 3.4 },
-      { day: 'Thu', hours: 4.8 },
-      { day: 'Fri', hours: 5.6 },
-      { day: 'Sat', hours: 2.1 },
-      { day: 'Sun', hours: 2.3 }
-    ]
-  },
-  notifications: [],
-  reports: {},
-  settings: {}
-};
-
-const STORAGE_KEY = "lifeos_app_state";
+import { INITIAL_STATE } from "./initialState.js";
 
 // Fonksyon Helper pou fè yon vrè Deep Merge rekursif
 function isObject(item) {
@@ -114,55 +53,37 @@ function shallowEqual(objA, objB) {
 // 2. Klas Store (Pattern Observer pou sekirite ak pèfòmans)
 class Store {
   constructor() {
-    this.state = this._loadFromStorage();
+    // Kòmanse sèlman ak INITIAL_STATE (Pèsistans ekstèn ap chaje rès yo pita)
+    this.state = { ...INITIAL_STATE };
     this.listeners = [];
   }
 
-  // Chaje done depi nan LocalStorage ak yon Deep Merge rekursif pou evite pèdi nouvo fushye yo
-  _loadFromStorage() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        return deepMerge(DEFAULT_STATE, parsed);
-      }
-    } catch (e) {
-      console.error("Erreur lors du chargement de LocalStorage:", e);
-    }
-    return { ...DEFAULT_STATE };
-  }
-
-  // Sove eta a nan LocalStorage ak tout dat chanjman yo
-  _saveToStorage() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde dans LocalStorage:", e);
+  // Enskri yon middleware pou kouri sou store la (egzanp: store.use(persistence.middleware))
+  use(middleware) {
+    if (typeof middleware === "function") {
+      middleware(this);
     }
   }
 
-  // Bay eta aktyèl la (Read-Only)
+  // Bay eta aktyèl la (Read-Only kopi)
   getState() {
     return JSON.parse(JSON.stringify(this.state));
   }
 
-  // Ranplase tout eta a nèt (Itil pou Import JSON / Restore)
+  // Ranplase tout eta a nèt (Ak Deep Merge pou sekirite done yo)
   setState(newState) {
     if (!newState || typeof newState !== "object") return;
     
-    const updatedMeta = {
-      ...DEFAULT_STATE.meta,
-      ...newState.meta,
-      updatedAt: new Date().toISOString()
-    };
+    const mergedState = deepMerge(INITIAL_STATE, newState);
 
     this.state = { 
-      ...DEFAULT_STATE, 
-      ...newState,
-      meta: updatedMeta
+      ...mergedState,
+      meta: {
+        ...mergedState.meta,
+        updatedAt: new Date().toISOString()
+      }
     };
     
-    this._saveToStorage();
     this._notify();
   }
 
@@ -174,7 +95,6 @@ class Store {
       const [head, ...tail] = pathArray;
       const currentVal = (obj && typeof obj === 'object') ? obj[head] : undefined;
       
-      // Si se yon etaj oswa yon objè, nou kreye yon nouvo kopi san nou pa mitasyon anyen
       const updatedVal = updateNested(currentVal, tail, val);
       
       if (Array.isArray(obj)) {
@@ -189,18 +109,15 @@ class Store {
       }
     };
 
-    // Prepare nouvo eta a
     const pathArray = Array.isArray(path) ? path : [path];
     const nextState = updateNested(this.state, pathArray, value);
     
-    // Mete ajou lè meta a te chanje
     nextState.meta = {
       ...this.state.meta,
       updatedAt: new Date().toISOString()
     };
 
     this.state = nextState;
-    this._saveToStorage();
     this._notify();
   }
 
