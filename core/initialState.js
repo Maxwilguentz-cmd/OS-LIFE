@@ -32,6 +32,9 @@ export const INITIAL_STATE = {
   // Swivi sou sa k ap aprann yo (Mache ak state.learning)
   learning: [],
 
+  // Nouvo slice pou objektif yo
+  goals: [],
+
   // Depatman finans, ekonomi ak tranzaksyon yo
   finance: {
     transactions: [], // Istorik tranzaksyon yo { id, type, amount, category, date }
