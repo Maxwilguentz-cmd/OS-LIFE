@@ -18,13 +18,8 @@ export function renderAll(state) {
 
   // 2. DETAY SOU ITILIZATÈ A (User Profile / Welcome Card)
   if (state.user) {
-    const welcomeDoneCount = document.getElementById("welcomeDoneCount");
     const totalMissions = state.missions ? state.missions.length : 0;
     const completedMissions = state.missions ? state.missions.filter(m => m.done).length : 0;
-
-    if (welcomeDoneCount) {
-      welcomeDoneCount.textContent = `${completedMissions} of ${totalMissions}`;
-    }
 
     // Mete ajou non ak jeneralite yo
     const welcomeTitle = document.querySelector(".card--welcome h2");
@@ -34,7 +29,7 @@ export function renderAll(state) {
 
     const welcomeSub = document.querySelector(".welcome-sub");
     if (welcomeSub) {
-      welcomeSub.innerHTML = `You've completed <strong id="welcomeDoneCount">${completedMissions} of ${totalMissions}</strong> mission items and logged <strong>${state.focusedTimeToday || "0h"}</strong> of focused work so far.`;
+      welcomeSub.innerHTML = `You've completed <strong>${completedMissions} of ${totalMissions}</strong> mission items and logged <strong>${state.focusedTimeToday || "0h"}</strong> of focused work so far.`;
     }
 
     const welcomeChips = document.querySelector(".welcome-chips");
@@ -193,7 +188,7 @@ export function renderAll(state) {
       const offset = circumference - (pct / 100) * circumference;
       savingsRing.style.strokeDasharray = `${circumference}`;
       savingsRing.style.strokeDashoffset = `${offset}`;
-    }
+  }
   }
 
   // 7. PLAN ENTÈNÈT (Internet Plan Progress Bar)
