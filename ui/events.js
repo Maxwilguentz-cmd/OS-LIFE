@@ -6,6 +6,7 @@
 import { store } from "../core/store.js";
 import { taskService } from "../services/taskService.js";
 import { moodService } from "../services/moodService.js";
+import { goalsService } from "../services/goalsService.js";
 
 export function bindGlobalEvents() {
 
@@ -138,6 +139,19 @@ export function bindGlobalEvents() {
       }
     );
 
+  }
+
+  // 6. GOALS CHECKBOX
+  const goalsList = document.getElementById("goalsList");
+  if (goalsList) {
+    goalsList.addEventListener("click", (e) => {
+      const check = e.target.closest(".check");
+      if (!check) return;
+      const item = check.closest(".goal-item");
+      if (!item) return;
+      const id = Number(item.dataset.id);
+      goalsService.toggleGoal(id);
+    });
   }
 
 }
