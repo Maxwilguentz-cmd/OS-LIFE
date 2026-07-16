@@ -1,7 +1,7 @@
 /**
  * LifeOS - Finance Service
  * Jere tout lojik biznis pou finans yo: tranzaksyon, ekonomi, bidjè, ak analiz rapò.
- * Sèvis sa a pa touche DOM ditou epi li asire entegrite done yo nan store la.
+ * Sèvis sa a pa touche DOM ditou epi li asire entegrite done yo nan store la. 
  */
 
 import { store } from "../core/store.js";
