@@ -2,7 +2,7 @@
  * LifeOS - Routes Registry & Navigation
  * Jere navigasyon ant diferan modil yo san reload paj la.
  */
-import { renderTasksView, bindTasksEvents } from "../modules/tasks/tasksView.js";
+import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
 import { store } from "../core/store.js";
 
 // 1. Lis tout wout (routes) ki disponib nan aplikasyon an
@@ -11,14 +11,15 @@ export const routesRegistry = {
     id: "dashboard",
     title: "Tableau de Bord",
     init: (state) => {
-      console.log("Dashboard inisyalize ak state:", state);
+      restoreDashboardView();
     }
   },
   tasks: {
     id: "tasks",
     title: "Tâches & Objectifs",
     init: (state) => {
-      console.log("Tasks inisyalize");
+      renderTasksView(state);
+      bindTasksEvents();
     }
   },
   calendar: {
@@ -54,14 +55,6 @@ export const routesRegistry = {
  */
 export function navigateTo(routeId) {
   // Fallback si wout la pa egziste nan registry a
-tasks: {
-    id: "tasks",
-    title: "Tâches & Objectifs",
-    init: (state) => {
-      renderTasksView(state);
-      bindTasksEvents();
-    }
-  },  
   let targetRoute = routesRegistry[routeId];
   if (!targetRoute) {
     targetRoute = routesRegistry.dashboard;
