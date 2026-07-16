@@ -134,6 +134,33 @@ export function renderAll(state) {
     `).join('');
   }
 
+  // 5b. OBJEKTIF YO (Long-term goals)
+  const goalsList = document.getElementById("goalsList");
+  const goalsTag = document.getElementById("goalsTag");
+  if (goalsList && state.goals) {
+    const totalGoals = state.goals.length;
+    const completedGoals = state.goals.filter(g => g.done).length;
+
+    if (goalsTag) {
+      goalsTag.textContent = `${completedGoals}/${totalGoals}`;
+    }
+
+    goalsList.innerHTML = state.goals.map(goal => `
+      <li class="goal-item ${goal.done ? 'is-done' : ''}" data-id="${goal.id}">
+        <button class="check" aria-label="Toggle complete">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M3 8.5L6.2 11.5L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="goal-copy">
+          <span class="goal-title">${goal.title}</span>
+          <span class="goal-meta">${goal.category || ''}${goal.targetDate ? ' · ' + new Date(goal.targetDate).toLocaleDateString() : ''}</span>
+        </div>
+        <span class="goal-pct">${goal.progress}%</span>
+      </li>
+    `).join('');
+  }
+
   // 6. PWOGRÈ SAVINGS (Savings Progress Ring)
   if (state.savings) {
     const savingsRing = document.getElementById("savingsRing");
