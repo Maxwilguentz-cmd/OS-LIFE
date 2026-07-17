@@ -4,7 +4,6 @@
  */
 
 import { renderTasksView, bindTasksEvents } from "../modules/tasks/tasksView.js";
-import { initDashboardBackup, restoreDashboardView } from "../modules/dashboard/dashboardView.js";
 import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
 import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
 import { renderProjectsView, bindProjectsEvents } from "../modules/projects/projectsView.js";
@@ -12,7 +11,13 @@ import { renderLearningView, bindLearningEvents } from "../modules/learning/lear
 import { renderSettingsView, bindSettingsEvents } from "../modules/settings/settingsView.js";
 import { bindGlobalEvents } from "../ui/events.js";
 import { renderHabitsView, bindHabitsEvents } from "../modules/habits/habitsView.js";
+import { initDashboardBackup, restoreDashboardView } from "../modules/dashboard/dashboardView.js";
 import { store } from "../core/store.js";
+
+// Kaptire backup Dashboard orijinal la IMEDYATMAN, pandan mainContent
+// toujou gen gri (.grid) ki soti dirèkteman nan index.html.
+// Sa a dwe rive anvan nenpòt navigasyon/klik itilizatè a.
+initDashboardBackup();
 
 // 1. Lis tout wout (routes) ki disponib nan aplikasyon an
 export const routesRegistry = {
@@ -156,9 +161,6 @@ export function navigateTo(routeId) {
 
 // 2. Koute klik sou sidebar a lè DOM nan pare
 document.addEventListener("DOMContentLoaded", () => {
-  // Inisyalize backup Dashboard la anvan lòt evènman navigasyon yo kòmanse koute
-  initDashboardBackup();
-
   // Koute klik sou tout eleman ki gen atribi data-route
   document.body.addEventListener("click", (e) => {
     const routeTrigger = e.target.closest("[data-route]");
