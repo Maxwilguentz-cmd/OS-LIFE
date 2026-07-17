@@ -2,6 +2,7 @@
  * LifeOS - Routes Registry & Navigation
  * Jere navigasyon ant diferan modil yo san reload paj la.
  */
+
 import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
 import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
 import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
@@ -9,6 +10,7 @@ import { renderProjectsView, bindProjectsEvents } from "../modules/projects/proj
 import { renderLearningView, bindLearningEvents } from "../modules/learning/learningView.js";
 import { renderSettingsView, bindSettingsEvents } from "../modules/settings/settingsView.js";
 import { bindGlobalEvents } from "../ui/events.js";
+import { renderHabitsView, bindHabitsEvents } from "../modules/habits/habitsView.js";
 import { store } from "../core/store.js";
 
 // 1. Lis tout wout (routes) ki disponib nan aplikasyon an
@@ -68,6 +70,14 @@ export const routesRegistry = {
       renderSettingsView(state);
       bindSettingsEvents();
     }
+  },
+  habits: {
+    id: "habits",
+    title: "Habitudes",
+    init: (state) => {
+      renderHabitsView(state);
+      bindHabitsEvents();
+    }
   }
 };
 
@@ -104,7 +114,8 @@ export function navigateTo(routeId) {
         finance: "Finances",
         projects: "Projects",
         learning: "Learning",
-        settings: "Settings"
+        settings: "Settings",
+        habits: "Habits"
       },
       ht: {
         dashboard: "Tablo de Bò",
@@ -113,7 +124,8 @@ export function navigateTo(routeId) {
         finance: "Finans & Bidjè",
         projects: "Pwojè & Nòt",
         learning: "Aprantisaj",
-        settings: "Konfigirasyon"
+        settings: "Konfigirasyon",
+        habits: "Abitid"
       },
       fr: {
         dashboard: "Tableau de Bord",
@@ -122,10 +134,11 @@ export function navigateTo(routeId) {
         finance: "Finances & Budget",
         projects: "Projets & Notes",
         learning: "Apprentissage",
-        settings: "Configuration"
+        settings: "Configuration",
+        habits: "Habitudes"
       }
     };
-    
+        
     // Mete tit la nan lang chwazi a, si li pa jwenn li li pran tit wout la pa defo
     viewTitleEl.textContent = dict[currentLang]?.[targetRoute.id] || targetRoute.title;
   }
@@ -145,16 +158,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Koute klik sou tout eleman ki gen atribi data-route
   document.body.addEventListener("click", (e) => {
     const routeTrigger = e.target.closest("[data-route]");
-    
+        
     if (routeTrigger) {
       e.preventDefault(); // Anpeche href la reload paj la
       const routeId = routeTrigger.getAttribute("data-route");
       navigateTo(routeId);
-
       // Fèmen sidebar a ak scrim nan otomatikman apre navigasyon an fin fèt
       const sidebar = document.getElementById("sidebar");
       const sidebarScrim = document.getElementById("sidebarScrim");
-
       if (sidebar) {
         sidebar.classList.remove("is-open");
       }
