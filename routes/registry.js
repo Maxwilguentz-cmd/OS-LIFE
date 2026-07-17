@@ -102,6 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault(); // Anpeche href la reload paj la
       const routeId = routeTrigger.getAttribute("data-route");
       navigateTo(routeId);
+
+      // Fèmen sidebar a ak scrim nan otomatikman apre navigasyon an fin fèt
+      const sidebar = document.getElementById("sidebar");
+      const sidebarScrim = document.getElementById("sidebarScrim");
+
+      if (sidebar) {
+        sidebar.classList.remove("is-open");
+      }
+      if (sidebarScrim) {
+        sidebarScrim.classList.remove("is-active");
+      }
     }
   });
 });
