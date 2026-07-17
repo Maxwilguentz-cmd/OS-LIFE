@@ -1,7 +1,7 @@
 // ============================================================
 // LifeOS — render.js (Afichaj Dinamik nan UI a)
 // ============================================================
-
+import { calculatePlanStatus } from "./planLogic.js";
 export function renderAll(state) {
   if (!state) return;
 
