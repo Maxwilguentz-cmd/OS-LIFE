@@ -160,6 +160,7 @@ export function bindGlobalEvents() {
 
       const provider = document.getElementById("networkSelect").value;
       const planType = document.getElementById("planTypeSelect").value;
+      const price = document.getElementById("priceInput").value;
       const totalDays = getDaysFromType(planType);
 
       // Sove nouvo plan an nan store, dat kòmansman = jodi a
