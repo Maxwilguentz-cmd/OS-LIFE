@@ -113,8 +113,8 @@ export function renderAll(state) {
     });
   }
 
-  // 5. MISYON YO (Today's mission)
-  const cardMissionHeader = document.querySelector(".card--missions h3");
+  // 5. MISYON YO (Today's mission) - KOREKSYON: card--mission (san "s")
+  const cardMissionHeader = document.querySelector(".card--mission h3");
   if (cardMissionHeader) {
     cardMissionHeader.textContent = dictDash.missionTitle;
   }
@@ -256,12 +256,12 @@ export function renderAll(state) {
     }
   }
 
-  // 8. PWOJÈ YO (Current Projects List)
+  // 8. PWOJÈ YO (Current Projects List) - KOREKSYON: card-link (olye de view-all)
   const cardProjectsHeader = document.querySelector(".card--projects h3");
   if (cardProjectsHeader) {
     cardProjectsHeader.textContent = dictDash.projectsTitle;
   }
-  const cardProjectsViewAll = document.querySelector(".card--projects .view-all");
+  const cardProjectsViewAll = document.querySelector(".card--projects .card-link");
   if (cardProjectsViewAll) {
     cardProjectsViewAll.textContent = dictDash.viewAll;
   }
@@ -317,7 +317,7 @@ export function renderAll(state) {
     if (statPills.length >= 3) {
       statPills[0].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours}</span><span class="stat-label">${dictDash.focusedTimeLabel}</span>`;
       statPills[1].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours ? state.weeklyStats.tasksDone : 0}</span><span class="stat-label">${dictDash.tasksDoneLabel}</span>`;
-      statPills[2].innerHTML = `<span class="stat-num">${state.weeklyStats.comparisonPct}</span><span class="stat-label">${dictDash.vsLastWeekLabel}</span>`;
+      statPills[2].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours ? state.weeklyStats.comparisonPct : 0}</span><span class="stat-label">${dictDash.vsLastWeekLabel}</span>`;
     }
 
     if (weeklyBars && state.weeklyStats.days) {
