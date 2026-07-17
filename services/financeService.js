@@ -130,7 +130,7 @@ export const financeService = {
   },
 
   /**
-   * Chanje objektif ekonomi an nan rasin store la dirèkteman
+   * Chanje objektif ekonomi lan nan rasin store la dirèkteman
    * @param {number} goal - Nouvo montan objektif la
    */
   setSavingsGoal(goal) {
@@ -140,6 +140,29 @@ export const financeService = {
     }
 
     store.updateState(["savings", "goal"], parsedGoal);
+  },
+
+  /**
+   * Mete ajou non objektif la
+   * @param {string} name - Nouvo non objektif la
+   */
+  setSavingsGoalName(name) {
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      throw new Error("Non objektif la pa dwe vid.");
+    }
+    store.updateState(["savings", "goalName"], name.trim());
+  },
+
+  /**
+   * Sove montan kontribisyon chak mwa a
+   * @param {number} amount - Montan kontribisyon an
+   */
+  setMonthlyContribution(amount) {
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount < 0) {
+      throw new Error("Kontribisyon chak mwa a dwe yon chif pozitif.");
+    }
+    store.updateState(["savings", "monthlyContribution"], parsedAmount);
   },
 
   /**
