@@ -3,7 +3,8 @@
  * Jere navigasyon ant diferan modil yo san reload paj la.
  */
 
-import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
+import { renderTasksView, bindTasksEvents } from "../modules/tasks/tasksView.js";
+import { restoreDashboardView } from "../modules/dashboard/dashboardView.js";
 import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
 import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
 import { renderProjectsView, bindProjectsEvents } from "../modules/projects/projectsView.js";
