@@ -44,7 +44,7 @@ export function bindGlobalEvents() {
   }
 
 
-  // 3. MOBILE SIDEBAR
+  // 3. MOBILE SIDEBAR (Koreksyon: Itilize .onclick pou evite double evènman)
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");
   const sidebarScrim = document.getElementById("sidebarScrim");
@@ -58,16 +58,10 @@ export function bindGlobalEvents() {
     };
 
 
-    menuToggle.addEventListener(
-      "click",
-      toggleSidebar
-    );
+    menuToggle.onclick = toggleSidebar;
 
 
-    sidebarScrim.addEventListener(
-      "click",
-      toggleSidebar
-    );
+    sidebarScrim.onclick = toggleSidebar;
 
   }
 
