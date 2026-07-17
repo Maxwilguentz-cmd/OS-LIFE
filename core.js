@@ -5,7 +5,7 @@
 // Done pa defo (Mock State) si localStorage vid
 const defaultState = {
   settings: { language: "ht", theme: "dark" },
-  user: { name: "Marvens", role: "Antreprenè & Jeni", avatar: "M" },
+  user: { name: "Wilguentz", role: "Antreprenè & Jeni", avatar: "W" },
   missions: [
     { id: 1, title: "Kòde achitekti LifeOS la", category: "Teknoloji", done: true },
     { id: 2, title: "Pran 15 minit meditasyon", category: "Sante", done: false },
