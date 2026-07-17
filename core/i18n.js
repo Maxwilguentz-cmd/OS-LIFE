@@ -2,10 +2,17 @@
  * LifeOS - core/i18n.js
  * Jere tradiksyon ak aplikasyon langaj sou koòdone aplikasyon an.
  */
+import { store } from "./store.js";
 
 export const TRANSLATIONS = {
   en: {
-    dashboard: "Dashboard",
+    dashboard: {
+      title: "Dashboard",
+      welcomeGreeting: "Let's make today count,",
+      missionsCompleted: "You've completed",
+      missionItems: "mission items and logged",
+      focusedWork: "of focused work so far."
+    },
     tasks: "Tasks",
     calendar: "Calendar",
     finance: "Finances",
@@ -15,7 +22,13 @@ export const TRANSLATIONS = {
     newTaskBtn: "New task"
   },
   ht: {
-    dashboard: "Tablo de Bò",
+    dashboard: {
+      title: "Tablo de Bò",
+      welcomeGreeting: "Ann fè jounen jodi a konte,",
+      missionsCompleted: "Ou konplete",
+      missionItems: "tach nan misyon w yo epi ou pase",
+      focusedWork: "nan travay konsantre jiskaprezan."
+    },
     tasks: "Tach & Objektif",
     calendar: "Kalandriye & Routine",
     finance: "Finans & Bidjè",
@@ -25,7 +38,13 @@ export const TRANSLATIONS = {
     newTaskBtn: "Nouvo tach"
   },
   fr: {
-    dashboard: "Tableau de Bord",
+    dashboard: {
+      title: "Tableau de Bord",
+      welcomeGreeting: "Faisons en sorte que chaque instant compte,",
+      missionsCompleted: "Vous avez accompli",
+      missionItems: "tâches de votre mission et enregistré",
+      focusedWork: "de travail ciblé jusqu'à présent."
+    },
     tasks: "Tâches & Objectifs",
     calendar: "Calendrier & Routine",
     finance: "Finances & Budget",
@@ -35,6 +54,15 @@ export const TRANSLATIONS = {
     newTaskBtn: "Nouvelle tâche"
   }
 };
+
+/**
+ * Rekipere langaj ki aktif la nan store la
+ * @returns {string} Kòd lang lan ("en", "ht", "fr")
+ */
+export function getCurrentLanguage() {
+  const state = store.getState();
+  return state.settings?.language || "en";
+}
 
 /**
  * Aplike tradiksyon yo sou sidebar la, bouton nouvo tach la ak HTML tag la
@@ -51,10 +79,15 @@ export function applyLanguage(langCode) {
   const navItems = document.querySelectorAll(".nav-item[data-route]");
   navItems.forEach(item => {
     const routeId = item.getAttribute("data-route");
-    if (routeId && dict[routeId]) {
+    if (routeId) {
       const span = item.querySelector("span");
       if (span) {
-        span.textContent = dict[routeId];
+        // Piske dashboard se yon objè kounye a, nou asire nou pran sèlman tèks la si se yon objè
+        if (routeId === "dashboard") {
+          span.textContent = dict.dashboard.title;
+        } else if (dict[routeId]) {
+          span.textContent = dict[routeId];
+        }
       }
     }
   });
@@ -75,8 +108,12 @@ export function applyLanguage(langCode) {
     const activeNavItem = document.querySelector(".nav-item.is-active");
     if (activeNavItem) {
       const activeRouteId = activeNavItem.getAttribute("data-route");
-      if (activeRouteId && dict[activeRouteId]) {
-        viewTitleEl.textContent = dict[activeRouteId];
+      if (activeRouteId) {
+        if (activeRouteId === "dashboard") {
+          viewTitleEl.textContent = dict.dashboard.title;
+        } else if (dict[activeRouteId]) {
+          viewTitleEl.textContent = dict[activeRouteId];
+        }
       }
     }
   }
