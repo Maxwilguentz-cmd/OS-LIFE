@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ht">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LifeOS — Dashboard</title>
+  <title>LifeOS — Tablo bò</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +22,7 @@
 <div class="app">
 
   <!-- ================= SIDEBAR (NAVIGATION) ================= -->
-  <aside class="sidebar" id="sidebar" aria-label="Main Navigation">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasyon Prensipal">
     <div class="sidebar-brand">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none">
@@ -35,41 +35,41 @@
 
     <!-- Navigation Hooks via data-route -->
     <nav class="sidebar-nav" id="sidebarNav">
-      <a href="#dashboard" class="nav-item is-active" data-route="dashboard" data-tip="Dashboard" aria-label="Go to Dashboard">
+      <a href="#dashboard" class="nav-item is-active" data-route="dashboard" data-tip="Tablo bò" aria-label="Ale nan Tablo bò">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
-        <span>Dashboard</span>
+        <span>Tablo bò</span>
       </a>
-      <a href="#tasks" class="nav-item" data-route="tasks" data-tip="Tasks" aria-label="Go to Tasks">
+      <a href="#tasks" class="nav-item" data-route="tasks" data-tip="Tach" aria-label="Ale nan Tach">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h11M4 12h16M4 18h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="20" cy="6" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg>
-        <span>Tasks</span>
+        <span>Tach</span>
       </a>
-      <a href="#calendar" class="nav-item" data-route="calendar" data-tip="Calendar" aria-label="Go to Calendar">
+      <a href="#calendar" class="nav-item" data-route="calendar" data-tip="Kalandriye" aria-label="Ale nan Kalandriye">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 9.5H20.5M8 3V6M16 3V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Calendar</span>
+        <span>Kalandriye</span>
       </a>
-      <a href="#finance" class="nav-item" data-route="finance" data-tip="Finances" aria-label="Go to Finances">
+      <a href="#finance" class="nav-item" data-route="finance" data-tip="Finans" aria-label="Ale nan Finans">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M17 6.5C17 6.5 14.8 5 12 5C9.5 5 7.5 6.4 7.5 8.3C7.5 12.3 17 10.2 17 14.8C17 16.9 14.7 18.5 12 18.5C9 18.5 7 16.8 7 16.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Finances</span>
+        <span>Finans</span>
       </a>
-      <a href="#projects" class="nav-item" data-route="projects" data-tip="Projects" aria-label="Go to Projects">
+      <a href="#projects" class="nav-item" data-route="projects" data-tip="Pwojè" aria-label="Ale nan Pwojè">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7.5C3 6.1 4.1 5 5.5 5H9L11 7.5H18.5C19.9 7.5 21 8.6 21 10V17C21 18.4 19.9 19.5 18.5 19.5H5.5C4.1 19.5 3 18.4 3 17V7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        <span>Projects</span>
+        <span>Pwojè</span>
       </a>
-      <a href="#learning" class="nav-item" data-route="learning" data-tip="Learning" aria-label="Go to Learning">
+      <a href="#learning" class="nav-item" data-route="learning" data-tip="Aprantisaj" aria-label="Ale nan Aprantisaj">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 8L12 3L22 8L12 13L2 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 10.5V16C6 16 8.5 18.5 12 18.5C15.5 18.5 18 16 18 16V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Learning</span>
+        <span>Aprantisaj</span>
       </a>
-      <a href="#habits" class="nav-item" data-route="habits" data-tip="Habits" aria-label="Go to Habits">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 8 6 8 10.5C8 13 9.8 15 12 15C14.2 15 16 13 16 10.5C16 6 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 14C7 14 6 17 6 18.5C6 20.9 8.7 22.8 12 22.8C15.3 22.8 18 20.9 18 18.5C18 17 17 14 17 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Habits</span>
+      <a href="#habits" class="nav-item" data-route="habits" data-tip="Abitid" aria-label="Ale nan Abitid">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 8 6 8 10.5C8 13 9.8 15 12 15C14.2 15 16 13 16 10.5C16 6 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 14C7 14 6 17 6 18.5C6 20.9 8.7 22.8 12 22.8C15.3 22.8 18 20.9 18 18.5C18 17 17 14 17 14" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span>Abitid</span>
       </a>
     </nav>
 
     <!-- Profile Area (Required Hooks) -->
     <div class="sidebar-footer">
-      <a href="#settings" class="nav-item" data-route="settings" data-tip="Settings" aria-label="Go to Settings">
+      <a href="#settings" class="nav-item" data-route="settings" data-tip="Paramèt" aria-label="Ale nan Paramèt">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9L19.5 5.4L17.1 6.4C16.4 5.8 15.6 5.3 14.7 5L14.3 2.5H9.7L9.3 5C8.4 5.3 7.6 5.8 6.9 6.4L4.5 5.4L2.5 8.9L4.6 10.5C4.5 11 4.5 11.5 4.5 12C4.5 12.5 4.5 13 4.6 13.5L2.5 15.1L4.5 18.6L6.9 17.6C7.6 18.2 8.4 18.7 9.3 19L9.7 21.5H14.3L14.7 19C15.6 18.7 16.4 18.2 17.1 17.6L19.5 18.6L21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-        <span>Settings</span>
+        <span>Paramèt</span>
       </a>
       <div class="sidebar-user" id="sidebarUserProfile">
         <div class="user-avatar" id="userAvatar">-</div>
@@ -86,32 +86,32 @@
 
     <!-- TOPBAR / HEADER -->
     <header class="topbar">
-      <button class="icon-btn only-mobile" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="sidebar">
+      <button class="icon-btn only-mobile" id="menuToggle" aria-label="Louvri/Fèmen meni" aria-expanded="false" aria-controls="sidebar">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7H20M4 12H20M4 17H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
 
       <div class="topbar-title">
-        <h1 id="viewTitle">Overview</h1>
+        <h1 id="viewTitle">Apèsi jeneral</h1>
         <p id="todayLabel">--</p>
       </div>
 
       <div class="topbar-search" role="search">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <input type="text" id="searchInput" placeholder="Search LifeOS…" aria-label="Search across system">
+        <input type="text" id="searchInput" placeholder="Chèche nan LifeOS…" aria-label="Chèche nan tout sistèm nan">
         <span class="kbd" aria-hidden="true">⌘K</span>
       </div>
 
       <div class="topbar-actions">
-        <button class="icon-btn" id="notificationBtn" aria-label="Notifications, no new messages" aria-live="polite">
+        <button class="icon-btn" id="notificationBtn" aria-label="Notifikasyon, pa gen nouvo mesaj" aria-live="polite">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9.5C6 6 8.7 3.5 12 3.5C15.3 3.5 18 6 18 9.5C18 15 20 16 20 16H4C4 16 6 15 6 9.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.5 19C9.5 19 10 20.5 12 20.5C14 20.5 14.5 19 14.5 19" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
           <span class="dot-badge" id="notificationBadge" style="display: none;"></span>
         </button>
-        <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark theme">
+        <button class="icon-btn" id="themeToggle" aria-label="Chanje tèm klè oswa fonse">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5C18.9 15 17.7 15.3 16.4 15.3C11.8 15.3 8 11.6 8 7C8 5.7 8.3 4.4 8.9 3.3C5.3 4.4 2.7 7.8 2.7 11.7C2.7 16.6 6.7 20.6 11.6 20.6C15.5 20.6 18.8 18.1 20 14.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         </button>
-        <button class="btn-primary" id="newTaskBtn" aria-label="Create a new task">
+        <button class="btn-primary" id="newTaskBtn" aria-label="Kreye yon nouvo tach">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          New task
+          Nouvo tach
         </button>
       </div>
     </header>
@@ -124,9 +124,9 @@
         <section class="card card--welcome span-8" id="welcomeSection" data-reveal>
           <div class="welcome-text">
             <p class="eyebrow" id="welcomeGreeting">--</p>
-            <h2 id="welcomeTitle">Loading profile...</h2>
+            <h2 id="welcomeTitle">Pwofil la ap chaje...</h2>
             <p class="welcome-sub" id="welcomeSub">
-              You've completed <strong id="welcomeDoneCount">--</strong> mission items and logged <strong id="welcomeFocusedTime">--</strong> of focused work so far.
+              Ou konplete <strong id="welcomeDoneCount">--</strong> eleman nan misyon w yo epi ou pase <strong id="welcomeFocusedTime">--</strong> tan konsantre sou travay ou jiska kounye a.
             </p>
             <div class="welcome-chips" id="welcomeChips">
               <!-- Dynamically populated chips (e.g., Streak, Weather) -->
@@ -140,7 +140,7 @@
             </svg>
             <div class="arc-label">
               <span class="arc-time" id="arcTime">--:--</span>
-              <span class="arc-caption" id="arcCaption">of day used</span>
+              <span class="arc-caption" id="arcCaption">nan jounen an pase</span>
             </div>
           </div>
         </section>
@@ -148,34 +148,34 @@
         <!-- 2. MOOD SECTION -->
         <section class="card card--mood span-4" id="moodSection" data-reveal>
           <div class="card-head">
-            <h3>Today's mood</h3>
-            <span class="card-tag" id="moodTag">Not set</span>
+            <h3>Atitid jodi a</h3>
+            <span class="card-tag" id="moodTag">Pa defini</span>
           </div>
           <div class="mood-row" id="moodRow">
-            <button class="mood-btn" data-mood="great" data-label="Great" aria-label="Feeling Great">
+            <button class="mood-btn" data-mood="great" data-label="An fòm" aria-label="Mwen santi m byen anpil">
               <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M12 24C14.5 28 25.5 28 28 24" class="mood-mouth"/></svg>
-              <span>Great</span>
+              <span>An fòm</span>
             </button>
-            <button class="mood-btn" data-mood="good" data-label="Good" aria-label="Feeling Good">
+            <button class="mood-btn" data-mood="good" data-label="Byen" aria-label="Mwen santi m byen">
               <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 25C16 27.5 24 27.5 27 25" class="mood-mouth"/></svg>
-              <span>Good</span>
+              <span>Byen</span>
             </button>
-            <button class="mood-btn" data-mood="okay" data-label="Okay" aria-label="Feeling Okay">
+            <button class="mood-btn" data-mood="okay" data-label="Nòmal" aria-label="Mwen la pi lwen">
               <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 26H27" class="mood-mouth"/></svg>
-              <span>Okay</span>
+              <span>Nòmal</span>
             </button>
-            <button class="mood-btn" data-mood="low" data-label="Low" aria-label="Feeling Low">
+            <button class="mood-btn" data-mood="low" data-label="Febli" aria-label="Mwen santi m ba">
               <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 27C16 24.5 24 24.5 27 27" class="mood-mouth"/></svg>
-              <span>Low</span>
+              <span>Febli</span>
             </button>
           </div>
-          <p class="mood-note" id="moodNote">Tap a face to log how you're feeling today.</p>
+          <p class="mood-note" id="moodNote">Klike sou yon figi pou anrejistre jan w santi w jodi a.</p>
         </section>
 
         <!-- 3. MISSION SECTION -->
         <section class="card card--mission span-4" id="missionSection" data-reveal>
           <div class="card-head">
-            <h3>Today's mission</h3>
+            <h3>Misyon jodi a</h3>
             <span class="card-tag" id="missionTag">0/0</span>
           </div>
           <ul class="mission-list" id="missionList">
@@ -186,9 +186,9 @@
         <!-- 4. SAVINGS SECTION -->
         <section class="card card--savings span-4" id="savingsSection" data-reveal>
           <div class="card-head">
-            <h3>Savings progress</h3>
+            <h3>Devlopman kòb sere</h3>
             <span class="card-tag tag--mint" id="savingsTag">--</span>
-            <button class="icon-btn" id="addTransactionBtn" aria-label="Add a transaction" title="Add transaction" style="width:28px;height:28px;">
+            <button class="icon-btn" id="addTransactionBtn" aria-label="Ajoute yon tranzaksyon" title="Ajoute tranzaksyon" style="width:28px;height:28px;">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
           </div>
@@ -204,7 +204,7 @@
             </div>
             <div class="savings-meta">
               <p class="savings-goal" id="savingsGoalName">--</p>
-              <p class="savings-amounts"><strong id="savingsCurrent">--</strong> <span id="savingsTarget">of --</span></p>
+              <p class="savings-amounts"><strong id="savingsCurrent">--</strong> <span id="savingsTarget">sou --</span></p>
               <p class="savings-sub" id="savingsSub">--</p>
             </div>
           </div>
@@ -213,9 +213,9 @@
         <!-- 5. INTERNET PLAN SECTION -->
         <section class="card card--plan span-4" id="internetPlanSection" data-reveal>
           <div class="card-head">
-            <h3>Active internet plan</h3>
-            <span class="card-tag tag--violet" id="planDaysLeft">-- days left</span>
-            <button class="icon-btn" id="managePlanBtn" aria-label="Manage internet plan" title="Manage plan" style="width:28px;height:28px;">
+            <h3>Plan entènèt aktif</h3>
+            <span class="card-tag tag--violet" id="planDaysLeft">-- jou ki rete</span>
+            <button class="icon-btn" id="managePlanBtn" aria-label="Manaje plan entènèt" title="Manaje plan" style="width:28px;height:28px;">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9L19.5 5.4L17.1 6.4C16.4 5.8 15.6 5.3 14.7 5L14.3 2.5H9.7L9.3 5C8.4 5.3 7.6 5.8 6.9 6.4L4.5 5.4L2.5 8.9L4.6 10.5C4.5 11 4.5 11.5 4.5 12C4.5 12.5 4.5 13 4.6 13.5L2.5 15.1L4.5 18.6L6.9 17.6C7.6 18.2 8.4 18.7 9.3 19L9.7 21.5H14.3L14.7 19C15.6 18.7 16.4 18.2 17.1 17.6L19.5 18.6L21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
             </button>
           </div>
@@ -228,8 +228,8 @@
               <div class="plan-bar-fill" id="planBarFill" style="width: 0%;"></div>
             </div>
             <div class="plan-stats">
-              <span><strong id="planUsed">--</strong> used</span>
-              <span><strong id="planLeft">--</strong> left</span>
+              <span><strong id="planUsed">--</strong> itilize</span>
+              <span><strong id="planLeft">--</strong> ki rete</span>
             </div>
             <p class="plan-renew" id="planRenewDate">--</p>
           </div>
@@ -238,8 +238,8 @@
         <!-- 6. PROJECTS SECTION -->
         <section class="card card--projects span-7" id="projectsSection" data-reveal>
           <div class="card-head">
-            <h3>Current projects</h3>
-            <a href="#projects" class="card-link" data-route="projects" aria-label="View all current projects">View all</a>
+            <h3>Pwojè kounye a</h3>
+            <a href="#projects" class="card-link" data-route="projects" aria-label="Wè tout pwojè kounye a">Wè tout</a>
           </div>
           <div class="project-list" id="projectList">
             <!-- Dynamically populated via render.js -->
@@ -249,7 +249,7 @@
         <!-- NEW GOALS SECTION -->
         <section class="card card--goals span-5" id="goalsSection" data-reveal>
           <div class="card-head">
-            <h3>Long-term goals</h3>
+            <h3>Objektif alontèm</h3>
             <span class="card-tag" id="goalsTag">0/0</span>
           </div>
           <ul class="goals-list" id="goalsList">
@@ -260,7 +260,7 @@
         <!-- 7. LEARNING SECTION -->
         <section class="card card--learning span-12" id="learningSection" data-reveal>
           <div class="card-head">
-            <h3>Learning progress</h3>
+            <h3>Aprantisaj</h3>
             <span class="card-tag" id="learningTag">--</span>
           </div>
           <div class="learning-list" id="learningList">
@@ -271,11 +271,11 @@
         <!-- 8. WEEKLY STATS SECTION -->
         <section class="card card--stats span-12" id="weeklyStatsSection" data-reveal>
           <div class="card-head">
-            <h3>Weekly statistics</h3>
+            <h3>Statistik pou semèn nan</h3>
             <div class="stats-summary" id="statsSummary">
-              <div class="stat-pill"><span class="stat-num" id="statFocusedTime">--</span><span class="stat-label">Focused time</span></div>
-              <div class="stat-pill"><span class="stat-num" id="statTasksDone">--</span><span class="stat-label">Tasks done</span></div>
-              <div class="stat-pill"><span class="stat-num" id="statTrend">--</span><span class="stat-label">vs last week</span></div>
+              <div class="stat-pill"><span class="stat-num" id="statFocusedTime">--</span><span class="stat-label">Tan konsantre</span></div>
+              <div class="stat-pill"><span class="stat-num" id="statTasksDone">--</span><span class="stat-label">Tach ki fèt</span></div>
+              <div class="stat-pill"><span class="stat-num" id="statTrend">--</span><span class="stat-label">konpare ak semèn pase</span></div>
             </div>
           </div>
           <div class="bars" id="weeklyBars">
