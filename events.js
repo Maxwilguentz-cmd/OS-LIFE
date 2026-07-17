@@ -3,7 +3,7 @@
 // ============================================================
 
 import { store, applyLanguage } from "./core.js";
-
+import { getDaysFromType } from "./planLogic.js";
 /**
  * Konfigirasyon ak koute tout evènman entèraksyon nan LifeOS
  */
