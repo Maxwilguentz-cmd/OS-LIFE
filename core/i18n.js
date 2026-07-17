@@ -33,6 +33,17 @@ export const TRANSLATIONS = {
       tasksDoneLabel: "Tasks done",
       vsLastWeekLabel: "vs last week"
     },
+    tasksPage: {
+      addTitle: "Add a new mission",
+      inputPlaceholder: "What do you have to do today?",
+      addBtn: "Add Task",
+      allMissionsTitle: "All missions",
+      filterAll: "All",
+      filterActive: "Active",
+      filterDone: "Done",
+      emptyState: "No missions for now.",
+      emptyFiltered: "No missions match this filter."
+    },
     tasks: "Tasks",
     calendar: "Calendar",
     finance: "Finances",
@@ -47,7 +58,7 @@ export const TRANSLATIONS = {
       welcomeGreeting: "Ann fè jounen jodi a konte,",
       missionsCompleted: "Ou konplete",
       missionItems: "tach nan misyon w yo epi ou pase",
-      focusedWork: "nan travay konsantre jiskaprezan.",
+      focusedWork: "na travay konsantre jiskaprezan.",
       moodTitle: "Atitid jodi a",
       moodPlaceholder: "Klike sou yon figi pou anrejistre jan w santi w jodi a.",
       moodNotSet: "Pa defini",
@@ -69,13 +80,24 @@ export const TRANSLATIONS = {
       tasksDoneLabel: "Tach fini",
       vsLastWeekLabel: "konpare ak dènye semèn"
     },
+    tasksPage: {
+      addTitle: "Ajoute yon nouvo misyon",
+      inputPlaceholder: "Kisa w gen pou w fè jodi a?",
+      addBtn: "Add Task",
+      allMissionsTitle: "Tout misyon yo",
+      filterAll: "All",
+      filterActive: "Active",
+      filterDone: "Done",
+      emptyState: "Pa gen okenn misyon pou kounye a.",
+      emptyFiltered: "Pa gen misyon ki koresponn ak filtre sa a."
+    },
     tasks: "Tach & Objektif",
     calendar: "Kalandriye & Routine",
     finance: "Finans & Bidjè",
     projects: "Pwojè & Nòt",
     learning: "Aprantisaj",
     settings: "Konfigirasyon",
-    newTaskBtn: "Nouvo tach"
+    newTaskBtn: "Nouvo` tach"
   },
   fr: {
     dashboard: {
@@ -105,6 +127,17 @@ export const TRANSLATIONS = {
       tasksDoneLabel: "Tâches accomplies",
       vsLastWeekLabel: "vs la semaine dernière"
     },
+    tasksPage: {
+      addTitle: "Ajouter une nouvelle mission",
+      inputPlaceholder: "Qu'avez-vous à faire aujourd'hui ?",
+      addBtn: "Add Task",
+      allMissionsTitle: "Toutes les missions",
+      filterAll: "All",
+      filterActive: "Active",
+      filterDone: "Done",
+      emptyState: "Aucune mission pour le moment.",
+      emptyFiltered: "Aucune mission ne correspond à ce filtre."
+    },
     tasks: "Tâches & Objectifs",
     calendar: "Calendrier & Routine",
     finance: "Finances & Budget",
@@ -125,7 +158,7 @@ export function getCurrentLanguage() {
 }
 
 /**
- * Aplike tradiksyon yo sou sidebar la, bouton nouvo tach la ak HTML tag la
+ * Aplike tradiksyon yo sou sidebar la, bouton nouvo` tach la ak HTML tag la
  * @param {string} langCode - Kòd lang lan ("en", "ht", "fr")
  */
 export function applyLanguage(langCode) {
