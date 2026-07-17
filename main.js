@@ -1,11 +1,7 @@
-import "./routes/registry.js";
-import { store } from "./core/store.js";
-import { persistence } from "./core/persistence.js";
-import { notify } from "./core/notify.js";
-import { runAutomaticChecks } from "./core/scheduler.js";
-import { applyLanguage } from "./core/i18n.js";
-import { renderAll } from "./ui/render.js";
-import { bindGlobalEvents } from "./ui/events.js";
+import { store, persistence, applyLanguage } from "./core.js";
+import { notify, runAutomaticChecks } from "./scheduler.js";
+import { renderAll } from "./render.js";
+import { bindGlobalEvents } from "./events.js";
 
 
 const DAY_ARC_REFRESH_MS = 60000;
