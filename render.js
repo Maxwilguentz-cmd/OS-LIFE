@@ -102,22 +102,29 @@ export function renderAll(state) {
     savingsAmountText.innerHTML = `$${savings.current} <span>/ $${savings.target}</span>`;
   }
 
-  // 7. Plan Entènèt (Internet Plan)
+ 
+// 7. Plan Entènèt (Internet Plan)
   const plan = state.internetPlan;
   if (plan) {
+    const { daysLeft, pct, renewDate, status } = calculatePlanStatus(plan);
+
     const planProvider = document.querySelector(".plan-provider");
     const planPrice = document.querySelector(".plan-price");
     const planDaysLeft = document.getElementById("planDaysLeft");
     const planBarFill = document.getElementById("planBarFill");
-    
+    const planUsed = document.getElementById("planUsed");
+    const planLeft = document.getElementById("planLeft");
+    const planRenewDate = document.getElementById("planRenewDate");
+    const sidebarPlanStatus = document.getElementById("sidebarPlanStatus");
+
     if (planProvider) planProvider.textContent = plan.provider;
     if (planPrice) planPrice.textContent = plan.price;
-    if (planDaysLeft) planDaysLeft.textContent = `${plan.daysLeft} jou ki rete`;
-    
-    if (planBarFill) {
-      const planPct = ((plan.totalDays - plan.daysLeft) / plan.totalDays) * 100;
-      planBarFill.style.width = `${planPct}%`;
-    }
+    if (planDaysLeft) planDaysLeft.textContent = `${daysLeft} jou ki rete`;
+    if (planBarFill) planBarFill.style.width = `${pct}%`;
+    if (planUsed) planUsed.textContent = `${pct}%`;
+    if (planLeft) planLeft.textContent = `${daysLeft} jou`;
+    if (planRenewDate) planRenewDate.textContent = `Renouvèlman: ${renewDate}`;
+    if (sidebarPlanStatus) sidebarPlanStatus.textContent = `${plan.provider} — ${status}`;
   }
 
   // 8. Pwojè yo (Projects List)
