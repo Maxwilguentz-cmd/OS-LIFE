@@ -93,7 +93,7 @@ export const TRANSLATIONS = {
       welcomeGreeting: "Ann fè jounen jodi a konte,",
       missionsCompleted: "Ou konplete",
       missionItems: "tach nan misyon w yo epi ou pase",
-      focusedWork: "na travay konsantre jiskaprezan.",
+      focusedWork: "nan travay konsantre jiskaprezan.",
       moodTitle: "Atitid jodi a",
       moodPlaceholder: "Klike sou yon figi pou anrejistre jan w santi w jodi a.",
       moodNotSet: "Pa defini",
