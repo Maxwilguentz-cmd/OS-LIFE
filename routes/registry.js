@@ -6,6 +6,7 @@ import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modul
 import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
 import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
 import { renderProjectsView, bindProjectsEvents } from "../modules/projects/projectsView.js";
+import { renderLearningView, bindLearningEvents } from "../modules/learning/learningView.js";
 import { bindGlobalEvents } from "../ui/events.js";
 import { store } from "../core/store.js";
 
@@ -54,7 +55,10 @@ export const routesRegistry = {
   learning: {
     id: "learning",
     title: "Apprentissage & Suivi",
-    init: () => {}
+    init: (state) => {
+      renderLearningView(state);
+      bindLearningEvents();
+    }
   },
   settings: {
     id: "settings",
