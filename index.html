@@ -60,26 +60,27 @@
         <span>Aprantisaj</span>
       </a>
       <a href="#habits" class="nav-item" data-route="habits" data-tip="Abitid" aria-label="Ale nan Abitid">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 8 6 8 10.5C8 13 9.8 15 12 15C14.2 15 16 13 16 10.5C16 6 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 14C7 14 6 17 6 18.5C6 20.9 8.7 22.8 12 22.8C15.3 22.8 18 20.9 18 18.5C18 17 17 14 17 14" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C12 2 8 6 8 10.5C8 13 9.8 15 12 15C14.2 15 16 13 16 10.5C16 6 12 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 14C7 14 6 17 6 18.5C6 20.9 8.7 22.8 12 22.8C15.3 22.8 18 20.9 18 18.5C18 17 17 14 17 14" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
         <span>Abitid</span>
       </a>
     </nav>
+
     <div class="sidebar-plan" id="sidebarInternetPlan">
-    <p class="sidebar-plan-title">Plan Entènèt</p>
-    <form id="internetPlanForm">
-      <select id="networkSelect">
-        <option value="Natcom">Natcom</option>
-        <option value="Digicel">Digicel</option>
-      </select>
-      <select id="planTypeSelect">
-        <option value="24h">24 Èdtan</option>
-        <option value="weekly">Semèn</option>
-        <option value="monthly">Mwa</option>
-      </select>
-      <button type="submit">Sove</button>
-    </form>
-    <p class="sidebar-plan-status" id="sidebarPlanStatus">--</p>
-  </div>
+      <p class="sidebar-plan-title">Plan Entènèt</p>
+      <form id="internetPlanForm">
+        <select id="networkSelect">
+          <option value="Natcom">Natcom</option>
+          <option value="Digicel">Digicel</option>
+        </select>
+        <select id="planTypeSelect">
+          <option value="24h">24 Èdtan</option>
+          <option value="weekly">Semèn</option>
+          <option value="monthly">Mwa</option>
+        </select>
+        <button type="submit">Sove</button>
+      </form>
+      <p class="sidebar-plan-status" id="sidebarPlanStatus">--</p>
+    </div>
 
     <!-- Profile Area (Required Hooks) -->
     <div class="sidebar-footer">
@@ -99,8 +100,6 @@
 
   <!-- ================= MAIN CONTENT CONTAINER ================= -->
   <div class="main">
-
-    <!-- TOPBAR / HEADER -->
     <header class="topbar">
       <button class="icon-btn only-mobile" id="menuToggle" aria-label="Louvri/Fèmen meni" aria-expanded="false" aria-controls="sidebar">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7H20M4 12H20M4 17H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -132,10 +131,8 @@
       </div>
     </header>
 
-    <!-- CONTENT GRID -->
     <main class="content" id="mainContent">
       <div class="grid">
-
         <!-- 1. WELCOME SECTION -->
         <section class="card card--welcome span-8" id="welcomeSection" data-reveal>
           <div class="welcome-text">
@@ -144,11 +141,8 @@
             <p class="welcome-sub" id="welcomeSub">
               Ou konplete <strong id="welcomeDoneCount">--</strong> eleman nan misyon w yo epi ou pase <strong id="welcomeFocusedTime">--</strong> tan konsantre sou travay ou jiska kounye a.
             </p>
-            <div class="welcome-chips" id="welcomeChips">
-              <!-- Dynamically populated chips (e.g., Streak, Weather) -->
-            </div>
+            <div class="welcome-chips" id="welcomeChips"></div>
           </div>
-
           <div class="day-arc" aria-hidden="true">
             <svg viewBox="0 0 160 160">
               <circle class="arc-track" cx="80" cy="80" r="68"/>
@@ -168,20 +162,20 @@
             <span class="card-tag" id="moodTag">Pa defini</span>
           </div>
           <div class="mood-row" id="moodRow">
-            <button class="mood-btn" data-mood="great" data-label="An fòm" aria-label="Mwen santi m byen anpil">
-              <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M12 24C14.5 28 25.5 28 28 24" class="mood-mouth"/></svg>
+            <button class="mood-btn" data-mood="great" data-label="An fòm">
+              <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M12 24C14.5 28 25.5 28 28 24" class="mood-mouth"/></svg>
               <span>An fòm</span>
             </button>
-            <button class="mood-btn" data-mood="good" data-label="Byen" aria-label="Mwen santi m byen">
-              <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 25C16 27.5 24 27.5 27 25" class="mood-mouth"/></svg>
+            <button class="mood-btn" data-mood="good" data-label="Byen">
+              <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 25C16 27.5 24 27.5 27 25" class="mood-mouth"/></svg>
               <span>Byen</span>
             </button>
-            <button class="mood-btn" data-mood="okay" data-label="Nòmal" aria-label="Mwen la pi lwen">
-              <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 26H27" class="mood-mouth"/></svg>
+            <button class="mood-btn" data-mood="okay" data-label="Nòmal">
+              <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 26H27" class="mood-mouth"/></svg>
               <span>Nòmal</span>
             </button>
-            <button class="mood-btn" data-mood="low" data-label="Febli" aria-label="Mwen santi m ba">
-              <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 27C16 24.5 24 24.5 27 27" class="mood-mouth"/></svg>
+            <button class="mood-btn" data-mood="low" data-label="Febli">
+              <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17.5" class="mood-face"/><circle cx="14" cy="17" r="1.8" class="mood-eye"/><circle cx="26" cy="17" r="1.8" class="mood-eye"/><path d="M13 27C16 24.5 24 24.5 27 27" class="mood-mouth"/></svg>
               <span>Febli</span>
             </button>
           </div>
@@ -194,9 +188,7 @@
             <h3>Misyon jodi a</h3>
             <span class="card-tag" id="missionTag">0/0</span>
           </div>
-          <ul class="mission-list" id="missionList">
-            <!-- Dynamically populated via render.js -->
-          </ul>
+          <ul class="mission-list" id="missionList"></ul>
         </section>
 
         <!-- 4. SAVINGS SECTION -->
@@ -204,13 +196,13 @@
           <div class="card-head">
             <h3>Devlopman kòb sere</h3>
             <span class="card-tag tag--mint" id="savingsTag">--</span>
-            <button class="icon-btn" id="addTransactionBtn" aria-label="Ajoute yon tranzaksyon" title="Ajoute tranzaksyon" style="width:28px;height:28px;">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <button class="icon-btn" id="addTransactionBtn" style="width:28px;height:28px;">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
           </div>
           <div class="savings-body">
             <div class="ring-wrap">
-              <svg viewBox="0 0 120 120" class="ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120" class="ring">
                 <circle cx="60" cy="60" r="50" class="ring-track"/>
                 <circle cx="60" cy="60" r="50" class="ring-fill" id="savingsRing"/>
               </svg>
@@ -231,8 +223,8 @@
           <div class="card-head">
             <h3>Plan entènèt aktif</h3>
             <span class="card-tag tag--violet" id="planDaysLeft">-- jou ki rete</span>
-            <button class="icon-btn" id="managePlanBtn" aria-label="Manaje plan entènèt" title="Manaje plan" style="width:28px;height:28px;">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9L19.5 5.4L17.1 6.4C16.4 5.8 15.6 5.3 14.7 5L14.3 2.5H9.7L9.3 5C8.4 5.3 7.6 5.8 6.9 6.4L4.5 5.4L2.5 8.9L4.6 10.5C4.5 11 4.5 11.5 4.5 12C4.5 12.5 4.5 13 4.6 13.5L2.5 15.1L4.5 18.6L6.9 17.6C7.6 18.2 8.4 18.7 9.3 19L9.7 21.5H14.3L14.7 19C15.6 18.7 16.4 18.2 17.1 17.6L19.5 18.6L21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <button class="icon-btn" id="managePlanBtn" style="width:28px;height:28px;">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9L19.5 5.4L17.1 6.4C16.4 5.8 15.6 5.3 14.7 5L14.3 2.5H9.7L9.3 5C8.4 5.3 7.6 5.8 6.9 6.4L4.5 5.4L2.5 8.9L4.6 10.5C4.5 11 4.5 11.5 4.5 12C4.5 12.5 4.5 13 4.6 13.5L2.5 15.1L4.5 18.6L6.9 17.6C7.6 18.2 8.4 18.7 9.3 19L9.7 21.5H14.3L14.7 19C15.6 18.7 16.4 18.2 17.1 17.6L19.5 18.6L21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
             </button>
           </div>
           <div class="plan-body">
@@ -255,11 +247,9 @@
         <section class="card card--projects span-7" id="projectsSection" data-reveal>
           <div class="card-head">
             <h3>Pwojè kounye a</h3>
-            <a href="#projects" class="card-link" data-route="projects" aria-label="Wè tout pwojè kounye a">Wè tout</a>
+            <a href="#projects" class="card-link" data-route="projects">Wè tout</a>
           </div>
-          <div class="project-list" id="projectList">
-            <!-- Dynamically populated via render.js -->
-          </div>
+          <div class="project-list" id="projectList"></div>
         </section>
 
         <!-- NEW GOALS SECTION -->
@@ -268,9 +258,7 @@
             <h3>Objektif alontèm</h3>
             <span class="card-tag" id="goalsTag">0/0</span>
           </div>
-          <ul class="goals-list" id="goalsList">
-            <!-- Dynamically populated via render.js -->
-          </ul>
+          <ul class="goals-list" id="goalsList"></ul>
         </section>
 
         <!-- 7. LEARNING SECTION -->
@@ -279,9 +267,7 @@
             <h3>Aprantisaj</h3>
             <span class="card-tag" id="learningTag">--</span>
           </div>
-          <div class="learning-list" id="learningList">
-            <!-- Dynamically populated via render.js -->
-          </div>
+          <div class="learning-list" id="learningList"></div>
         </section>
 
         <!-- 8. WEEKLY STATS SECTION -->
@@ -294,21 +280,15 @@
               <div class="stat-pill"><span class="stat-num" id="statTrend">--</span><span class="stat-label">konpare ak semèn pase</span></div>
             </div>
           </div>
-          <div class="bars" id="weeklyBars">
-            <!-- Dynamically populated via render.js -->
-          </div>
+          <div class="bars" id="weeklyBars"></div>
         </section>
-
       </div>
     </main>
   </div>
 
-  <!-- Mobile Scrim Sidebar Overlay -->
   <div class="sidebar-scrim" id="sidebarScrim" aria-hidden="true"></div>
 </div>
 
-<!-- Main Javascript Modules Initialization -->
 <script type="module" src="main.js"></script>
-
 </body>
 </html>
