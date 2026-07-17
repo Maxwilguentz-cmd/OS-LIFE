@@ -178,7 +178,7 @@ export function bindGlobalEvents() {
           internetPlan: {
             provider,
             planType,
-            price: ansyenPlan?.price || "--",
+            price,
             startDate: new Date().toISOString().split('T')[0],
             totalDays
           },
