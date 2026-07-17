@@ -2,6 +2,7 @@
  * LifeOS — UI Render Module
  * Okipe aktyalizasyon DOM lan baze sou done ki nan Store la
  */
+import { TRANSLATIONS, getCurrentLanguage } from "../core/i18n.js";
 
 export function renderAll(state) {
   if (!state) return;
@@ -16,20 +17,24 @@ export function renderAll(state) {
       : `<svg viewBox="0 0 24 24" fill="none"><path d="M20 14.5C18.9 15 17.7 15.3 16.4 15.3C11.8 15.3 8 11.6 8 7C8 5.7 8.3 4.4 8.9 3.3C5.3 4.4 2.7 7.8 2.7 11.7C2.7 16.6 6.7 20.6 11.6 20.6C15.5 20.6 18.8 18.1 20 14.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
   }
 
-  // 2. DETAY SOU ITILIZATÈ A (User Profile / Welcome Card)
+  // 2. DETAY SOU ITILIZATÈ A (User Profile / Welcome Card) - KOREKSYON TRANSLATION
   if (state.user) {
     const totalMissions = state.missions ? state.missions.length : 0;
     const completedMissions = state.missions ? state.missions.filter(m => m.done).length : 0;
 
-    // Mete ajou non ak jeneralite yo
+    // Jwenn tradiksyon pou Dashboard la selon lang aktyèl la
+    const activeLang = getCurrentLanguage();
+    const dictDash = TRANSLATIONS[activeLang].dashboard;
+
+    // Mete ajou non ak jeneralite yo ak tradiksyon dinamik
     const welcomeTitle = document.querySelector(".card--welcome h2");
     if (welcomeTitle) {
-      welcomeTitle.textContent = `Let's make today count, ${state.user.name || "Wilguentz"}.`;
+      welcomeTitle.textContent = `${dictDash.welcomeGreeting} ${state.user.name || "Wilguentz"}.`;
     }
 
     const welcomeSub = document.querySelector(".welcome-sub");
     if (welcomeSub) {
-      welcomeSub.innerHTML = `You've completed <strong>${completedMissions} of ${totalMissions}</strong> mission items and logged <strong>${state.focusedTimeToday || "0h"}</strong> of focused work so far.`;
+      welcomeSub.innerHTML = `${dictDash.missionsCompleted} <strong>${completedMissions} of ${totalMissions}</strong> ${dictDash.missionItems} <strong>${state.focusedTimeToday || "0h"}</strong> ${dictDash.focusedWork}`;
     }
 
     const welcomeChips = document.querySelector(".welcome-chips");
@@ -188,7 +193,7 @@ export function renderAll(state) {
       const offset = circumference - (pct / 100) * circumference;
       savingsRing.style.strokeDasharray = `${circumference}`;
       savingsRing.style.strokeDashoffset = `${offset}`;
-  }
+    }
   }
 
   // 7. PLAN ENTÈNÈT (Internet Plan Progress Bar)
