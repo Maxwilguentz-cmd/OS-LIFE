@@ -1,155 +1,178 @@
 // ============================================================
-// LifeOS — events.js (Koute ak Jere Tout Evènman Global Yo)
+// LifeOS — render.js (Afichaj Dinamik nan UI a)
 // ============================================================
 
-import { store, applyLanguage } from "./core.js";
+export function renderAll(state) {
+  if (!state) return;
 
-/**
- * Konfigirasyon ak koute tout evènman entèraksyon nan LifeOS
- */
-export function bindGlobalEvents() {
-  // 1. Jere Sidebar sou Mobil (Meni Louvri / Fèmen)
-  const menuToggle = document.getElementById("menuToggle");
-  const sidebar = document.getElementById("sidebar");
-  const sidebarScrim = document.getElementById("sidebarScrim");
+  // 1. Enfo Itilizatè
+  const user = state.user || { name: "Marvens", role: "Antreprenè", avatar: "M" };
+  const userAvatar = document.getElementById("userAvatar");
+  const userName = document.getElementById("userName");
+  const userRole = document.getElementById("userRole");
+  if (userAvatar) userAvatar.textContent = user.avatar;
+  if (userName) userName.textContent = user.name;
+  if (userRole) userRole.textContent = user.role;
 
-  if (menuToggle && sidebar && sidebarScrim) {
-    const toggleSidebarObj = () => {
-      sidebar.classList.toggle("is-open");
-      sidebarScrim.classList.toggle("is-open");
-      const èskeLouvri = sidebar.classList.contains("is-open");
-      menuToggle.setAttribute("aria-expanded", èskeLouvri ? "true" : "false");
-    };
-
-    menuToggle.addEventListener("click", toggleSidebarObj);
-    sidebarScrim.addEventListener("click", toggleSidebarObj);
+  // 2. Dat jodi a
+  const todayLabel = document.getElementById("todayLabel");
+  if (todayLabel) {
+    const opsyon = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    todayLabel.textContent = new Date().toLocaleDateString(state.settings?.language === "en" ? "en-US" : "ht-HT", opsyon);
   }
 
-  // 2. Jere Navigasyon (Chanje Route / View aktif)
-  const navItems = document.querySelectorAll(".nav-item[data-route]");
-  const viewTitle = document.getElementById("viewTitle");
+  // 3. Welcome Card tèks ak kalkil lè (Day Arc)
+  const welcomeTitle = document.getElementById("welcomeTitle");
+  const lang = state.settings?.language || "ht";
+  const doneMissions = state.missions ? state.missions.filter(m => m.done).length : 0;
+  
+  if (welcomeTitle) {
+    welcomeTitle.textContent = lang === "ht" 
+      ? `Bonjou ankò, ${user.name} — ou pare pou domine jounen an?`
+      : `Welcome back, ${user.name} — ready to dominate the day?`;
+  }
+  
+  const welcomeDoneCount = document.getElementById("welcomeDoneCount");
+  if (welcomeDoneCount) {
+    welcomeDoneCount.textContent = lang === "ht"
+      ? `Ou konplete ${doneMissions} misyon jodi a.`
+      : `You completed ${doneMissions} missions today.`;
+  }
 
-  navItems.forEach(elt => {
-    elt.addEventListener("click", (e) => {
-      e.preventDefault();
-      
-      // Retire klas aktif sou ansyen an epi mete l sou sa ki klike a
-      navItems.forEach(item => item.classList.remove("is-active"));
-      elt.classList.add("is-active");
+  // Kalkil Day Arc (Lè ak minit aktyèl)
+  const kounyeA = new Date();
+  const minitPase = (kounyeA.getHours() * 60) + kounyeA.getMinutes();
+  const pousantajJounen = (minitPase / 1440) * 100;
+  const arcFill = document.querySelector(".arc-fill");
+  const arcTime = document.querySelector(".arc-time");
+  
+  if (arcTime) {
+    arcTime.textContent = kounyeA.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+  if (arcFill) {
+    // Dasharray total se 427 nan CSS la
+    const offset = 427 - (427 * pousantajJounen) / 100;
+    arcFill.style.strokeDashoffset = offset;
+  }
 
-      // Chanje tit paj la selon route la
-      const routKounyeA = elt.getAttribute("data-route");
-      if (viewTitle) {
-        const tèksMeni = elt.querySelector("span")?.textContent || routKounyeA;
-        viewTitle.textContent = tèksMeni;
-      }
-    });
-  });
-
-  // 3. Jere Atitid (Mood Tracker)
-  const moodButtons = document.querySelectorAll(".mood-btn");
-  const moodTag = document.getElementById("moodTag");
-
-  moodButtons.forEach(elt => {
-    elt.addEventListener("click", () => {
-      moodButtons.forEach(btn => btn.classList.remove("is-selected"));
-      elt.classList.add("is-selected");
-
-      const chwaMood = elt.getAttribute("data-mood");
-      const labelMood = elt.getAttribute("data-label");
-
-      if (moodTag) {
-        moodTag.textContent = labelMood;
-      }
-
-      // Mete ajou eta a nan store la pou lòt konpozan ka wè l
-      store.setState(state => ({
-        ...state,
-        userMood: chwaMood
-      }));
-    });
-  });
-
-  // 4. Jere Klike sou Misyon (Toche Done / Pa Done) via Delegasyon Evènman
+  // 4. Misyon yo (Mission List)
   const missionList = document.getElementById("missionList");
-  if (missionList) {
-    missionList.addEventListener("click", (e) => {
-      // Tcheke si klike a fèt sou bwat check la oswa sou tèks misyon an
-      const tchekeElt = e.target.closest(".check") || e.target.closest(".mission-item");
-      if (!tchekeElt) return;
-
-      const misyonItem = tchekeElt.closest(".mission-item");
-      if (!misyonItem) return;
-
-      const misyonId = parseInt(misyonItem.getAttribute("data-id"), 10);
-      if (!misyonId) return;
-
-      // Modifye eta a san nou pa rele render dirèkteman
-      store.setState(state => {
-        const misyonYoMeteAjou = state.missions.map(m => {
-          if (m.id === misyonId) {
-            return { ...m, done: !m.done };
-          }
-          return m;
-        });
-        return {
-          ...state,
-          missions: misyonYoMeteAjou
-        };
-      });
-    });
+  if (missionList && state.missions) {
+    missionList.innerHTML = state.missions.map(m => `
+      <li class="mission-item ${m.done ? 'is-done' : ''}" data-id="${m.id}">
+        <button class="check" aria-label="Mete ajou misyon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mission-copy">
+          <span class="mission-title">${m.title}</span>
+          <span class="mission-meta">${m.category}</span>
+        </div>
+      </li>
+    `).join('');
   }
 
-  // 5. Jere Chanjman Tèm (Theme Toggle)
-  const themeToggle = document.getElementById("themeToggle");
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      store.setState(state => {
-        const nouvoTèm = state.settings.theme === "dark" ? "light" : "dark";
-        
-        // Aplike klas la dirèkteman sou dokiman an
-        if (nouvoTèm === "dark") {
-          document.documentElement.classList.add("dark-theme");
-        } else {
-          document.documentElement.classList.remove("dark-theme");
-        }
-
-        return {
-          ...state,
-          settings: { ...state.settings, theme: nouvoTèm }
-        };
-      });
-    });
+  // 5. Objektif yo (Goals List)
+  const goalsList = document.getElementById("goalsList");
+  if (goalsList && state.goals) {
+    goalsList.innerHTML = state.goals.map(g => `
+      <li class="goal-item ${g.done ? 'is-done' : ''}">
+        <div class="goal-copy">
+          <span class="goal-title">${g.title}</span>
+        </div>
+        <span class="goal-pct">${g.pct}%</span>
+      </li>
+    `).join('');
   }
 
-  // 6. Koute Aksyon sou Lòt Bouton ki nan Tablo Bò a
-  const newTaskBtn = document.getElementById("newTaskBtn");
-  if (newTaskBtn) {
-    newTaskBtn.addEventListener("click", () => {
-      console.log("Aksyon: Kreye yon nouvo tach");
-    });
+  // 6. Ekonomi (Savings Ring)
+  const savings = state.savings || { current: 0, target: 100 };
+  const savingsPctVal = Math.min(Math.round((savings.current / savings.target) * 100), 100);
+  const savingsPct = document.getElementById("savingsPct");
+  const savingsRing = document.getElementById("savingsRing");
+  
+  if (savingsPct) savingsPct.textContent = `${savingsPctVal}%`;
+  if (savingsRing) {
+    // Dasharray total se 314 nan CSS la
+    const ringOffset = 314 - (314 * savingsPctVal) / 100;
+    savingsRing.style.strokeDashoffset = ringOffset;
+  }
+  
+  const savingsAmountText = document.querySelector(".savings-amounts");
+  if (savingsAmountText) {
+    savingsAmountText.innerHTML = `$${savings.current} <span>/ $${savings.target}</span>`;
   }
 
-  const addTransactionBtn = document.getElementById("addTransactionBtn");
-  if (addTransactionBtn) {
-    addTransactionBtn.addEventListener("click", () => {
-      console.log("Aksyon: Ajoute yon tranzaksyon finansyè");
-    });
+  // 7. Plan Entènèt (Internet Plan)
+  const plan = state.internetPlan;
+  if (plan) {
+    const planProvider = document.querySelector(".plan-provider");
+    const planPrice = document.querySelector(".plan-price");
+    const planDaysLeft = document.getElementById("planDaysLeft");
+    const planBarFill = document.getElementById("planBarFill");
+    
+    if (planProvider) planProvider.textContent = plan.provider;
+    if (planPrice) planPrice.textContent = plan.price;
+    if (planDaysLeft) planDaysLeft.textContent = `${plan.daysLeft} jou ki rete`;
+    
+    if (planBarFill) {
+      const planPct = ((plan.totalDays - plan.daysLeft) / plan.totalDays) * 100;
+      planBarFill.style.width = `${planPct}%`;
+    }
   }
 
-  const managePlanBtn = document.getElementById("managePlanBtn");
-  if (managePlanBtn) {
-    managePlanBtn.addEventListener("click", () => {
-      console.log("Aksyon: Manaje plan entènèt la");
-    });
+  // 8. Pwojè yo (Projects List)
+  const projectList = document.getElementById("projectList");
+  if (projectList && state.projects) {
+    projectList.innerHTML = state.projects.map(p => `
+      <div class="project-row">
+        <div class="project-icon" style="--pc: ${p.color}">${p.name.substring(0,2).toUpperCase()}</div>
+        <div class="project-info">
+          <div class="project-top">
+            <span class="project-name">${p.name}</span>
+            <span class="project-pct">${p.pct}%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: ${p.pct}%; --pc: ${p.color}"></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
   }
 
-  // 7. Jere Chèche nan Sistèm nan (Search Input)
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const tèksChèche = e.target.value.toLowerCase();
-      console.log(`Rechèch LifeOS: ${tèksChèche}`);
-    });
+  // 9. Aprantisaj (Learning Block)
+  const learningList = document.getElementById("learningList");
+  if (learningList && state.learning) {
+    learningList.innerHTML = `
+      <div class="learning-info">
+        <span class="learning-name">${state.learning.topic}</span>
+        <span class="learning-pct">${state.learning.pct}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: ${state.learning.pct}%; --pc: var(--accent-violet)"></div>
+      </div>
+      <small class="learning-meta">${state.learning.duration}</small>
+    `;
+  }
+
+  // 10. Estatistik chak semèn (Weekly Stats & Bar Chart)
+  const statFocusedTime = document.getElementById("statFocusedTime");
+  const weeklyBars = document.getElementById("weeklyBars");
+  
+  if (statFocusedTime && state.weeklyStats) {
+    statFocusedTime.textContent = state.weeklyStats.focusedTime;
+  }
+  
+  if (weeklyBars && state.weeklyStats?.dailyData) {
+    const jouYo = ["L", "M", "M", "J", "V", "S", "D"];
+    const jodiEndeks = (new Date().getDay() + 6) % 7; // Konvèti pou Lendi kòmanse kòm 0
+    
+    weeklyBars.innerHTML = state.weeklyStats.dailyData.map((dataVal, i) => `
+      <div class="bar-col">
+        <div class="bar-track">
+          <div class="bar-fill ${i === jodiEndeks ? 'is-today' : ''}" style="height: ${dataVal}%"></div>
+        </div>
+        <span class="bar-day ${i === jodiEndeks ? 'is-today' : ''}">${jouYo[i]}</span>
+      </div>
+    `).join('');
   }
 }
