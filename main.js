@@ -3,7 +3,7 @@ import { store } from "./core/store.js";
 import { persistence } from "./core/persistence.js";
 import { notify } from "./core/notify.js";
 import { runAutomaticChecks } from "./core/scheduler.js";
-
+import { applyLanguage } from "./core/i18n.js";
 import { renderAll } from "./ui/render.js";
 import { bindGlobalEvents } from "./ui/events.js";
 
