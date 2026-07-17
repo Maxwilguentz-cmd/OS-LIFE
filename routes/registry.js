@@ -4,6 +4,7 @@
  */
 import { renderTasksView, bindTasksEvents, restoreDashboardView } from "../modules/tasks/tasksView.js";
 import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/calendarView.js";
+import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
 import { bindGlobalEvents } from "../ui/events.js";
 import { store } from "../core/store.js";
 
@@ -36,7 +37,10 @@ export const routesRegistry = {
   finance: {
     id: "finance",
     title: "Finances & Budget",
-    init: () => {}
+    init: (state) => {
+      renderFinanceView(state);
+      bindFinanceEvents();
+    }
   },
   projects: {
     id: "projects",
