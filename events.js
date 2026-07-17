@@ -1,115 +1,155 @@
 // ============================================================
-// LifeOS — events.js (Jesyon tout Evènman ak Entèraksyon)
+// LifeOS — events.js (Koute ak Jere Tout Evènman Global Yo)
 // ============================================================
+
 import { store, applyLanguage } from "./core.js";
 
+/**
+ * Konfigirasyon ak koute tout evènman entèraksyon nan LifeOS
+ */
 export function bindGlobalEvents() {
-  
-  // 1. Menu Toggle pou mobil (Sidebar + Scrim)
+  // 1. Jere Sidebar sou Mobil (Meni Louvri / Fèmen)
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");
-  
-  // Kreye yon scrim si li pa nan HTML pou evite kraze si eleman an manke
-  let scrim = document.querySelector(".sidebar-scrim");
-  if (!scrim && sidebar) {
-    scrim = document.createElement("div");
-    scrim.className = "sidebar-scrim";
-    sidebar.parentNode.insertBefore(scrim, sidebar.nextSibling);
-  }
+  const sidebarScrim = document.getElementById("sidebarScrim");
 
-  if (menuToggle && sidebar && scrim) {
-    const jereMenu = () => {
-      const èskeOuvè = sidebar.classList.toggle("is-open");
-      scrim.classList.toggle("is-open", èskeOuvè);
-      menuToggle.setAttribute("aria-expanded", èskeOuvè);
+  if (menuToggle && sidebar && sidebarScrim) {
+    const toggleSidebarObj = () => {
+      sidebar.classList.toggle("is-open");
+      sidebarScrim.classList.toggle("is-open");
+      const èskeLouvri = sidebar.classList.contains("is-open");
+      menuToggle.setAttribute("aria-expanded", èskeLouvri ? "true" : "false");
     };
-    menuToggle.addEventListener("click", jereMenu);
-    scrim.addEventListener("click", jereMenu);
+
+    menuToggle.addEventListener("click", toggleSidebarObj);
+    sidebarScrim.addEventListener("click", toggleSidebarObj);
   }
 
-  // 2. Chanjman Atitid (Mood Buttons)
-  const moodButtons = document.querySelectorAll(".mood-btn");
-  moodButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      moodButtons.forEach(b => b.classList.remove("is-selected"));
-      btn.classList.add("is-selected");
-      const moodSelected = btn.getAttribute("data-mood");
-      console.log(`[LifeOS Mood]: Imè chanje pou -> ${moodSelected}`);
-    });
-  });
-
-  // 3. Navigasyon nan Meni an (Sidebar Route Items)
+  // 2. Jere Navigasyon (Chanje Route / View aktif)
   const navItems = document.querySelectorAll(".nav-item[data-route]");
   const viewTitle = document.getElementById("viewTitle");
-  
-  navItems.forEach(item => {
-    item.addEventListener("click", (e) => {
+
+  navItems.forEach(elt => {
+    elt.addEventListener("click", (e) => {
       e.preventDefault();
-      navItems.forEach(i => i.classList.remove("is-active"));
-      item.classList.add("is-active");
       
-      const pitoWout = item.getAttribute("data-route");
+      // Retire klas aktif sou ansyen an epi mete l sou sa ki klike a
+      navItems.forEach(item => item.classList.remove("is-active"));
+      elt.classList.add("is-active");
+
+      // Chanje tit paj la selon route la
+      const routKounyeA = elt.getAttribute("data-route");
       if (viewTitle) {
-        viewTitle.textContent = item.querySelector("span")?.textContent || pitoWout;
-      }
-      
-      // Chanje langaj otomatik si se nan settings li klike
-      if (pitoWout === "settings") {
-        const lang Kounye a = store.getState().settings?.language || "ht";
-        applyLanguage(langKounye a === "ht" ? "en" : "ht");
+        const tèksMeni = elt.querySelector("span")?.textContent || routKounyeA;
+        viewTitle.textContent = tèksMeni;
       }
     });
   });
 
-  // 4. Aksyon sou Bouton Fonksyonèl yo (Modals / Triggers)
-  const klikeAksyon = (id, mesaj) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("click", () => alert(mesaj));
-  };
+  // 3. Jere Atitid (Mood Tracker)
+  const moodButtons = document.querySelectorAll(".mood-btn");
+  const moodTag = document.getElementById("moodTag");
 
-  klikeAksyon("newTaskBtn", "Kreyasyon nouvo tach ap vini nan pwochen vèsyon an!");
-  klikeAksyon("addTransactionBtn", "Ajoute tranzaksyon finansyè yo ap disponib byento!");
-  klikeAksyon("managePlanBtn", "Jesyon plan entènèt sa a ap lye ak API founisè a pito!");
+  moodButtons.forEach(elt => {
+    elt.addEventListener("click", () => {
+      moodButtons.forEach(btn => btn.classList.remove("is-selected"));
+      elt.classList.add("is-selected");
 
-  // 5. Chanjman Tèm (Dark / Light Theme Toggle)
-  const themeToggle = document.getElementById("themeToggle");
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const body = document.body;
-      const seKounye aNwa = body.style.getPropertyValue("--bg") !== "#ffffff";
-      
-      if (seKounye aNwa) {
-        body.style.setProperty("--bg", "#ffffff");
-        body.style.setProperty("--text-primary", "#0A0B0F");
-        console.log("[LifeOS Tèm]: Chanje pou Limyè");
-      } else {
-        body.style.unsetProperty ? body.style.unsetProperty("--bg") : body.style.removeProperty("--bg");
-        body.style.unsetProperty ? body.style.unsetProperty("--text-primary") : body.style.removeProperty("--text-primary");
-        console.log("[LifeOS Tèm]: Chanje pou Nwa");
+      const chwaMood = elt.getAttribute("data-mood");
+      const labelMood = elt.getAttribute("data-label");
+
+      if (moodTag) {
+        moodTag.textContent = labelMood;
       }
-    });
-  }
 
-  // 6. Chèche nan tout sistèm nan (Search Input)
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      console.log(`[LifeOS Search]: Rechèch ap fèt pou -> ${e.target.value}`);
+      // Mete ajou eta a nan store la pou lòt konpozan ka wè l
+      store.setState(state => ({
+        ...state,
+        userMood: chwaMood
+      }));
     });
-  }
+  });
 
-  // 7. Klike sou chèk bwat misyon yo pou wè entèraksyon
+  // 4. Jere Klike sou Misyon (Toche Done / Pa Done) via Delegasyon Evènman
   const missionList = document.getElementById("missionList");
   if (missionList) {
     missionList.addEventListener("click", (e) => {
-      const tchekeBtn = e.target.closest(".check");
-      if (tchekeBtn) {
-        const item = tchekeBtn.closest(".mission-item");
-        if (item) {
-          item.classList.toggle("is-done");
-          console.log(`[LifeOS Mission]: Estati misyon ${item.getAttribute("data-id")} chanje.`);
+      // Tcheke si klike a fèt sou bwat check la oswa sou tèks misyon an
+      const tchekeElt = e.target.closest(".check") || e.target.closest(".mission-item");
+      if (!tchekeElt) return;
+
+      const misyonItem = tchekeElt.closest(".mission-item");
+      if (!misyonItem) return;
+
+      const misyonId = parseInt(misyonItem.getAttribute("data-id"), 10);
+      if (!misyonId) return;
+
+      // Modifye eta a san nou pa rele render dirèkteman
+      store.setState(state => {
+        const misyonYoMeteAjou = state.missions.map(m => {
+          if (m.id === misyonId) {
+            return { ...m, done: !m.done };
+          }
+          return m;
+        });
+        return {
+          ...state,
+          missions: misyonYoMeteAjou
+        };
+      });
+    });
+  }
+
+  // 5. Jere Chanjman Tèm (Theme Toggle)
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      store.setState(state => {
+        const nouvoTèm = state.settings.theme === "dark" ? "light" : "dark";
+        
+        // Aplike klas la dirèkteman sou dokiman an
+        if (nouvoTèm === "dark") {
+          document.documentElement.classList.add("dark-theme");
+        } else {
+          document.documentElement.classList.remove("dark-theme");
         }
-      }
+
+        return {
+          ...state,
+          settings: { ...state.settings, theme: nouvoTèm }
+        };
+      });
+    });
+  }
+
+  // 6. Koute Aksyon sou Lòt Bouton ki nan Tablo Bò a
+  const newTaskBtn = document.getElementById("newTaskBtn");
+  if (newTaskBtn) {
+    newTaskBtn.addEventListener("click", () => {
+      console.log("Aksyon: Kreye yon nouvo tach");
+    });
+  }
+
+  const addTransactionBtn = document.getElementById("addTransactionBtn");
+  if (addTransactionBtn) {
+    addTransactionBtn.addEventListener("click", () => {
+      console.log("Aksyon: Ajoute yon tranzaksyon finansyè");
+    });
+  }
+
+  const managePlanBtn = document.getElementById("managePlanBtn");
+  if (managePlanBtn) {
+    managePlanBtn.addEventListener("click", () => {
+      console.log("Aksyon: Manaje plan entènèt la");
+    });
+  }
+
+  // 7. Jere Chèche nan Sistèm nan (Search Input)
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const tèksChèche = e.target.value.toLowerCase();
+      console.log(`Rechèch LifeOS: ${tèksChèche}`);
     });
   }
 }
