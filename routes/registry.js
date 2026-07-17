@@ -7,6 +7,7 @@ import { renderCalendarView, bindCalendarEvents } from "../modules/calendar/cale
 import { renderFinanceView, bindFinanceEvents } from "../modules/finance/financeView.js";
 import { renderProjectsView, bindProjectsEvents } from "../modules/projects/projectsView.js";
 import { renderLearningView, bindLearningEvents } from "../modules/learning/learningView.js";
+import { renderSettingsView, bindSettingsEvents } from "../modules/settings/settingsView.js";
 import { bindGlobalEvents } from "../ui/events.js";
 import { store } from "../core/store.js";
 
@@ -63,7 +64,10 @@ export const routesRegistry = {
   settings: {
     id: "settings",
     title: "Configuration",
-    init: () => {}
+    init: (state) => {
+      renderSettingsView(state);
+      bindSettingsEvents();
+    }
   }
 };
 
@@ -88,10 +92,42 @@ export function navigateTo(routeId) {
     }
   });
 
-  // B. Chanje tit la nan topbar la (#viewTitle)
+  // B. Chanje tit la nan topbar la (#viewTitle) selon tradiksyon lang ki aktif la
   const viewTitleEl = document.getElementById("viewTitle");
   if (viewTitleEl) {
-    viewTitleEl.textContent = targetRoute.title;
+    const currentLang = store.getState().settings?.language || "en";
+    const dict = {
+      en: {
+        dashboard: "Dashboard",
+        tasks: "Tasks",
+        calendar: "Calendar",
+        finance: "Finances",
+        projects: "Projects",
+        learning: "Learning",
+        settings: "Settings"
+      },
+      ht: {
+        dashboard: "Tablo de Bò",
+        tasks: "Tach & Objektif",
+        calendar: "Kalandriye & Routine",
+        finance: "Finans & Bidjè",
+        projects: "Pwojè & Nòt",
+        learning: "Aprantisaj",
+        settings: "Konfigirasyon"
+      },
+      fr: {
+        dashboard: "Tableau de Bord",
+        tasks: "Tâches & Objectifs",
+        calendar: "Calendrier & Routine",
+        finance: "Finances & Budget",
+        projects: "Projets & Notes",
+        learning: "Apprentissage",
+        settings: "Configuration"
+      }
+    };
+    
+    // Mete tit la nan lang chwazi a, si li pa jwenn li li pran tit wout la pa defo
+    viewTitleEl.textContent = dict[currentLang]?.[targetRoute.id] || targetRoute.title;
   }
 
   // C. Rele fonksyon init wout la ak state aktyèl store la
