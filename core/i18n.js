@@ -44,6 +44,15 @@ export const TRANSLATIONS = {
       emptyState: "No missions for now.",
       emptyFiltered: "No missions match this filter."
     },
+    calendarPage: {
+      emptyMissions: "No missions for today.",
+      todayMissionsTitle: "🎯 Today's missions",
+      monthNames: [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ],
+      dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    },
     tasks: "Tasks",
     calendar: "Calendar",
     finance: "Finances",
@@ -91,6 +100,15 @@ export const TRANSLATIONS = {
       emptyState: "Pa gen okenn misyon pou kounye a.",
       emptyFiltered: "Pa gen misyon ki koresponn ak filtre sa a."
     },
+    calendarPage: {
+      emptyMissions: "Pa gen okenn misyon pou jodi a.",
+      todayMissionsTitle: "🎯 Misyon pou jodi a",
+      monthNames: [
+        "Janvye", "Febriye", "Mas", "Avril", "Me", "Jen",
+        "Jiyè", "Out", "Septanm", "Oktòb", "Novanm", "Desanm"
+      ],
+      dayNames: ["Dim", "Len", "Mad", "Mèk", "Jou", "Van", "Sam"]
+    },
     tasks: "Tach & Objektif",
     calendar: "Kalandriye & Routine",
     finance: "Finans & Bidjè",
@@ -137,6 +155,15 @@ export const TRANSLATIONS = {
       filterDone: "Terminées",
       emptyState: "Aucune mission pour le moment.",
       emptyFiltered: "Aucune mission ne correspond à ce filtre."
+    },
+    calendarPage: {
+      emptyMissions: "Aucune mission pour aujourd'hui.",
+      todayMissionsTitle: "🎯 Missions d'aujourd'hui",
+      monthNames: [
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+      ],
+      dayNames: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
     },
     tasks: "Tâches & Objectifs",
     calendar: "Calendrier & Routine",
