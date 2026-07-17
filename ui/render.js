@@ -7,6 +7,10 @@ import { TRANSLATIONS, getCurrentLanguage } from "../core/i18n.js";
 export function renderAll(state) {
   if (!state) return;
 
+  // Jwenn tradiksyon pou Dashboard la selon lang aktyèl la pou tout kat yo
+  const activeLang = getCurrentLanguage();
+  const dictDash = TRANSLATIONS[activeLang].dashboard;
+
   // 1. ANBYANS / TEM (Theme light/dark)
   const isDark = state.theme === "dark";
   document.documentElement.setAttribute("data-theme", state.theme);
@@ -21,10 +25,6 @@ export function renderAll(state) {
   if (state.user) {
     const totalMissions = state.missions ? state.missions.length : 0;
     const completedMissions = state.missions ? state.missions.filter(m => m.done).length : 0;
-
-    // Jwenn tradiksyon pou Dashboard la selon lang aktyèl la
-    const activeLang = getCurrentLanguage();
-    const dictDash = TRANSLATIONS[activeLang].dashboard;
 
     // Mete ajou non ak jeneralite yo ak tradiksyon dinamik
     const welcomeTitle = document.querySelector(".card--welcome h2");
@@ -84,16 +84,21 @@ export function renderAll(state) {
   }
 
   // 4. METE MOOD (Today's mood)
+  const cardMoodHeader = document.querySelector(".card--mood h3");
+  if (cardMoodHeader) {
+    cardMoodHeader.textContent = dictDash.moodTitle;
+  }
+
   if (state.mood) {
     const moodTag = document.getElementById("moodTag");
     const moodNote = document.getElementById("moodNote");
     if (moodTag) {
       moodTag.textContent = state.mood.current 
         ? state.mood.current.charAt(0).toUpperCase() + state.mood.current.slice(1) 
-        : "Not set";
+        : dictDash.moodNotSet;
     }
     if (moodNote) {
-      moodNote.textContent = state.mood.note || "Tap a face to log how you're feeling today.";
+      moodNote.textContent = state.mood.note || dictDash.moodPlaceholder;
     }
 
     // Aktive bouton mood ki kòrèk la
@@ -109,6 +114,11 @@ export function renderAll(state) {
   }
 
   // 5. MISYON YO (Today's mission)
+  const cardMissionHeader = document.querySelector(".card--missions h3");
+  if (cardMissionHeader) {
+    cardMissionHeader.textContent = dictDash.missionTitle;
+  }
+
   const missionList = document.getElementById("missionList");
   const missionTag = document.getElementById("missionTag");
   if (missionList && state.missions) {
@@ -135,6 +145,11 @@ export function renderAll(state) {
   }
 
   // 5b. OBJEKTIF YO (Long-term goals)
+  const cardGoalsHeader = document.querySelector(".card--goals h3");
+  if (cardGoalsHeader) {
+    cardGoalsHeader.textContent = dictDash.goalsTitle;
+  }
+
   const goalsList = document.getElementById("goalsList");
   const goalsTag = document.getElementById("goalsTag");
   if (goalsList && state.goals) {
@@ -162,6 +177,11 @@ export function renderAll(state) {
   }
 
   // 6. PWOGRÈ SAVINGS (Savings Progress Ring)
+  const cardSavingsHeader = document.querySelector(".card--savings h3");
+  if (cardSavingsHeader) {
+    cardSavingsHeader.textContent = dictDash.savingsTitle;
+  }
+
   if (state.savings) {
     const savingsRing = document.getElementById("savingsRing");
     const savingsPct = document.getElementById("savingsPct");
@@ -178,13 +198,13 @@ export function renderAll(state) {
       savingsPct.textContent = `${pct}%`;
     }
     if (savingsGoal) {
-      savingsGoal.textContent = state.savings.goalName || "Savings Goal";
+      savingsGoal.textContent = state.savings.goalName || dictDash.savingsGoalDefault;
     }
     if (savingsAmounts) {
       savingsAmounts.innerHTML = `<strong>$${current.toLocaleString()}</strong> <span>of $${target.toLocaleString()}</span>`;
     }
     if (savingsSub) {
-      savingsSub.textContent = `+$${state.savings.monthlyContribution} this month · target ${state.savings.targetDate}`;
+      savingsSub.textContent = `+$${state.savings.monthlyContribution} ${dictDash.savingsThisMonth} ${state.savings.targetDate}`;
     }
 
     if (savingsRing) {
@@ -197,6 +217,11 @@ export function renderAll(state) {
   }
 
   // 7. PLAN ENTÈNÈT (Internet Plan Progress Bar)
+  const cardPlanHeader = document.querySelector(".card--plan h3");
+  if (cardPlanHeader) {
+    cardPlanHeader.textContent = dictDash.planTitle;
+  }
+
   if (state.internetPlan) {
     const planBarFill = document.getElementById("planBarFill");
     const planProvider = document.querySelector(".plan-provider");
@@ -221,17 +246,26 @@ export function renderAll(state) {
       planPrice.textContent = state.internetPlan.monthlyBudget  ? `$${state.internetPlan.monthlyBudget}/mo`  : "--";
     }
     if (planStats) {
-      planStats.innerHTML = `<span><strong>${used}GB</strong> used</span> <span><strong>${left}GB</strong> left</span>`;
+      planStats.innerHTML = `<span><strong>${used}GB</strong> ${dictDash.planUsed}</span> <span><strong>${left}GB</strong> ${dictDash.planLeft}</span>`;
     }
     if (planRenew) {
-      planRenew.textContent = `Renews automatically · ${state.internetPlan.renewDate}`;
+      planRenew.textContent = `${dictDash.planRenews} ${state.internetPlan.renewDate}`;
     }
     if (planTag) {
-      planTag.textContent = `${state.internetPlan.daysLeft} days left`;
+      planTag.textContent = `${state.internetPlan.daysLeft} ${dictDash.planDaysLeft}`;
     }
   }
 
   // 8. PWOJÈ YO (Current Projects List)
+  const cardProjectsHeader = document.querySelector(".card--projects h3");
+  if (cardProjectsHeader) {
+    cardProjectsHeader.textContent = dictDash.projectsTitle;
+  }
+  const cardProjectsViewAll = document.querySelector(".card--projects .view-all");
+  if (cardProjectsViewAll) {
+    cardProjectsViewAll.textContent = dictDash.viewAll;
+  }
+
   const projectList = document.querySelector(".project-list");
   if (projectList && state.projects) {
     projectList.innerHTML = state.projects.map(proj => `
@@ -250,6 +284,11 @@ export function renderAll(state) {
   }
 
   // 9. PWOGRÈ LEARNING (Learning Progress List)
+  const cardLearningHeader = document.querySelector(".card--learning h3");
+  if (cardLearningHeader) {
+    cardLearningHeader.textContent = dictDash.learningTitle;
+  }
+
   const learningList = document.querySelector(".learning-list");
   if (learningList && state.learning) {
     learningList.innerHTML = state.learning.map(learn => `
@@ -266,14 +305,19 @@ export function renderAll(state) {
   }
 
   // 10. STATISTIK SEMÈN NAN (Weekly statistics bars)
+  const cardStatsHeader = document.querySelector(".card--stats h3");
+  if (cardStatsHeader) {
+    cardStatsHeader.textContent = dictDash.statsTitle;
+  }
+
   const weeklyBars = document.getElementById("weeklyBars");
   const statPills = document.querySelectorAll(".stat-pill");
   
   if (state.weeklyStats) {
     if (statPills.length >= 3) {
-      statPills[0].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours}</span><span class="stat-label">Focused time</span>`;
-      statPills[1].innerHTML = `<span class="stat-num">${state.weeklyStats.tasksDone}</span><span class="stat-label">Tasks done</span>`;
-      statPills[2].innerHTML = `<span class="stat-num">${state.weeklyStats.comparisonPct}</span><span class="stat-label">vs last week</span>`;
+      statPills[0].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours}</span><span class="stat-label">${dictDash.focusedTimeLabel}</span>`;
+      statPills[1].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours ? state.weeklyStats.tasksDone : 0}</span><span class="stat-label">${dictDash.tasksDoneLabel}</span>`;
+      statPills[2].innerHTML = `<span class="stat-num">${state.weeklyStats.comparisonPct}</span><span class="stat-label">${dictDash.vsLastWeekLabel}</span>`;
     }
 
     if (weeklyBars && state.weeklyStats.days) {
