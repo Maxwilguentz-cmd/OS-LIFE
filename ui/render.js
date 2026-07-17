@@ -316,7 +316,7 @@ export function renderAll(state) {
   if (state.weeklyStats) {
     if (statPills.length >= 3) {
       statPills[0].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours}</span><span class="stat-label">${dictDash.focusedTimeLabel}</span>`;
-      statPills[1].innerHTML = `<span class="stat-num">${state.weeklyStats.focusedHours ? state.weeklyStats.tasksDone : 0}</span><span class="stat-label">${dictDash.tasksDoneLabel}</span>`;
+      statPills[1].innerHTML = `<span class="stat-num">${state.weeklyStats.tasksDone}</span><span class="stat-label">${dictDash.tasksDoneLabel}</span>`;
       statPills[2].innerHTML = `<span class="stat-num">${state.weeklyStats.comparisonPct}</span><span class="stat-label">${dictDash.vsLastWeekLabel}</span>`;
     }
 
