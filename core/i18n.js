@@ -44,14 +44,40 @@ export const TRANSLATIONS = {
       emptyState: "No missions for now.",
       emptyFiltered: "No missions match this filter."
     },
-    calendarPage: {
-      emptyMissions: "No missions for today.",
-      todayMissionsTitle: "🎯 Today's missions",
-      monthNames: [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ],
-      dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    financePage: {
+      balanceLabel: "Balance",
+      totalIncomeLabel: "Total Income",
+      totalExpenseLabel: "Total Expense",
+      savingsTitle: "Savings & Goals",
+      goalLabel: "Goal:",
+      progressLabel: "Progress:",
+      currentPlaceholder: "Current cash",
+      updateBtn: "Update",
+      newTxTitle: "New Transaction",
+      incomeLabel: "Income (+)",
+      expenseLabel: "Expense (-)",
+      amountPlaceholder: "Amount (HTG)",
+      categoryPlaceholder: "Choose a category",
+      descriptionPlaceholder: "Description",
+      addTxBtn: "Add Transaction",
+      historyTitle: "Transaction History",
+      emptyTx: "No transactions made for now.",
+      confirmDelete: "Are you sure you want to delete this transaction?",
+      categoryLabels: {
+        salary: "Salary",
+        business: "Business",
+        investment: "Investment",
+        gift: "Gift",
+        "other-income": "Other Income",
+        food: "Food",
+        rent: "Rent",
+        utilities: "Utilities",
+        transport: "Transport",
+        entertainment: "Entertainment",
+        health: "Health",
+        education: "Education",
+        "other-expense": "Other Expense"
+      }
     },
     tasks: "Tasks",
     calendar: "Calendar",
@@ -67,7 +93,7 @@ export const TRANSLATIONS = {
       welcomeGreeting: "Ann fè jounen jodi a konte,",
       missionsCompleted: "Ou konplete",
       missionItems: "tach nan misyon w yo epi ou pase",
-      focusedWork: "nan travay konsantre jiskaprezan.",
+      focusedWork: "na travay konsantre jiskaprezan.",
       moodTitle: "Atitid jodi a",
       moodPlaceholder: "Klike sou yon figi pou anrejistre jan w santi w jodi a.",
       moodNotSet: "Pa defini",
@@ -100,14 +126,40 @@ export const TRANSLATIONS = {
       emptyState: "Pa gen okenn misyon pou kounye a.",
       emptyFiltered: "Pa gen misyon ki koresponn ak filtre sa a."
     },
-    calendarPage: {
-      emptyMissions: "Pa gen okenn misyon pou jodi a.",
-      todayMissionsTitle: "🎯 Misyon pou jodi a",
-      monthNames: [
-        "Janvye", "Febriye", "Mas", "Avril", "Me", "Jen",
-        "Jiyè", "Out", "Septanm", "Oktòb", "Novanm", "Desanm"
-      ],
-      dayNames: ["Dim", "Len", "Mad", "Mèk", "Jou", "Van", "Sam"]
+    financePage: {
+      balanceLabel: "Balans",
+      totalIncomeLabel: "Total Antre",
+      totalExpenseLabel: "Total Depans",
+      savingsTitle: "Ekonomi & Objektif",
+      goalLabel: "Objektif:",
+      progressLabel: "Pwogrè:",
+      currentPlaceholder: "Kach aktyèl",
+      updateBtn: "Mete ajou",
+      newTxTitle: "Nouvo Tranzaksyon",
+      incomeLabel: "Antre (+)",
+      expenseLabel: "Depans (-)",
+      amountPlaceholder: "Montan (HTG)",
+      categoryPlaceholder: "Chwazi yon kategori",
+      descriptionPlaceholder: "Deskripsyon",
+      addTxBtn: "Ajoute Tranzaksyon",
+      historyTitle: "Istorik Tranzaksyon",
+      emptyTx: "Pa gen okenn tranzaksyon ki fèt pou kounye a.",
+      confirmDelete: "Èske ou vle efase tranzaksyon sa a tout bon?",
+      categoryLabels: {
+        salary: "Salè",
+        business: "Biznis",
+        investment: "Envestisman",
+        gift: "Kado",
+        "other-income": "Lòt Antre",
+        food: "Manje",
+        rent: "Lwaye",
+        utilities: "Sèvis piblik (Dlo/Kouran)",
+        transport: "Transpò",
+        entertainment: "Divètisman",
+        health: "Sante",
+        education: "Edikasyon",
+        "other-expense": "Lòt Depans"
+      }
     },
     tasks: "Tach & Objektif",
     calendar: "Kalandriye & Routine",
@@ -156,14 +208,40 @@ export const TRANSLATIONS = {
       emptyState: "Aucune mission pour le moment.",
       emptyFiltered: "Aucune mission ne correspond à ce filtre."
     },
-    calendarPage: {
-      emptyMissions: "Aucune mission pour aujourd'hui.",
-      todayMissionsTitle: "🎯 Missions d'aujourd'hui",
-      monthNames: [
-        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-      ],
-      dayNames: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
+    financePage: {
+      balanceLabel: "Solde",
+      totalIncomeLabel: "Revenus Totaux",
+      totalExpenseLabel: "Dépenses Totales",
+      savingsTitle: "Épargne & Objectifs",
+      goalLabel: "Objectif :",
+      progressLabel: "Progrès :",
+      currentPlaceholder: "Épargne actuelle",
+      updateBtn: "Mettre à jour",
+      newTxTitle: "Nouvelle Transaction",
+      incomeLabel: "Revenu (+)",
+      expenseLabel: "Dépense (-)",
+      amountPlaceholder: "Montant (HTG)",
+      categoryPlaceholder: "Choisir une catégorie",
+      descriptionPlaceholder: "Description",
+      addTxBtn: "Ajouter la Transaction",
+      historyTitle: "Historique des Transactions",
+      emptyTx: "Aucune transaction pour le moment.",
+      confirmDelete: "Voulez-vous vraiment supprimer cette transaction ?",
+      categoryLabels: {
+        salary: "Salaire",
+        business: "Entreprise",
+        investment: "Investissement",
+        gift: "Cadeau",
+        "other-income": "Autre Revenu",
+        food: "Nourriture",
+        rent: "Loyer",
+        utilities: "Factures (Eau/Élec)",
+        transport: "Transport",
+        entertainment: "Divertissement",
+        health: "Santé",
+        education: "Éducation",
+        "other-expense": "Autre Dépense"
+      }
     },
     tasks: "Tâches & Objectifs",
     calendar: "Calendrier & Routine",
