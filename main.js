@@ -25,6 +25,11 @@ function init(){
     store.use(persistence.middleware);
 
 
+    // Rekipere epi aplike langaj ki sove nan store la depi nan kòmansman chajman paj la
+    const savedLanguage = store.getState().settings?.language || "en";
+    applyLanguage(savedLanguage);
+
+
     // Initial UI render
     renderAll(store.getState());
 
