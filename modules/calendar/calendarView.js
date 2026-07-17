@@ -5,6 +5,7 @@
 
 import { taskService } from "../../services/taskService.js";
 import { store } from "../../core/store.js";
+import { TRANSLATIONS, getCurrentLanguage } from "../../core/i18n.js";
 // Reyitilize menm mekanis backup dashboard ki nan tasksView.js pou evite konfli
 import { restoreDashboardView } from "../tasks/tasksView.js";
 
@@ -19,8 +20,10 @@ let currentMonthOffset = 0;
  * @returns {string} HTML lis misyon yo
  */
 function generateDailyMissionsHTML(missions) {
+  const dict = TRANSLATIONS[getCurrentLanguage()].calendarPage;
+
   if (!missions || missions.length === 0) {
-    return `<p class="mood-note" style="text-align: center; padding: 16px;">Pa gen okenn misyon pou jodi a.</p>`;
+    return `<p class="mood-note" style="text-align: center; padding: 16px;">${dict.emptyMissions}</p>`;
   }
 
   return missions.map(task => {
@@ -47,17 +50,16 @@ function generateDailyMissionsHTML(missions) {
  */
 function generateCalendarGridHTML() {
   const today = new Date();
+  const dict = TRANSLATIONS[getCurrentLanguage()].calendarPage;
   
   // Kalkile mwa ak ane ki koresponn ak offset la
   const targetDate = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);
   const year = targetDate.getFullYear();
   const month = targetDate.getMonth();
 
-  // Non mwa yo an kreyòl / franse pou afichaj
-  const monthNames = [
-    "Janvye", "Febriye", "Mas", "Avril", "Me", "Jen", 
-    "Jiyè", "Out", "Septanm", "Oktòb", "Novanm", "Desanm"
-  ];
+  // Non mwa yo ak jou yo tradwi dapre lang lan
+  const monthNames = dict.monthNames;
+  const daysOfWeek = dict.dayNames;
 
   // Jwenn premye jou nan mwa a (0 = Dimanch, 1 = Lendi, ..., 6 = Samdi)
   const firstDayIndex = new Date(year, month, 1).getDay();
@@ -67,8 +69,6 @@ function generateCalendarGridHTML() {
 
   // Jwenn kantite jou nan mwa anvan an pou ranpli espas vid yo
   const prevMonthTotalDays = new Date(year, month, 0).getDate();
-
-  const daysOfWeek = ["Dim", "Len", "Mad", "Mèk", "Jod", "Vand", "Sam"];
   
   let gridHTML = `<div class="calendar-grid-container" style="display: flex; flex-direction: column; gap: 16px;">`;
   
@@ -142,6 +142,7 @@ export function renderCalendarView(state) {
   if (!mainContent) return;
 
   const missions = state.missions || [];
+  const dict = TRANSLATIONS[getCurrentLanguage()].calendarPage;
 
   const html = `
     <div class="calendar-page-container" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px;">
@@ -154,7 +155,7 @@ export function renderCalendarView(state) {
       <!-- SEKSYON LIS MISYON JODI A -->
       <section class="card" style="padding: 24px; background: rgba(20, 22, 29, 0.4); border: 1px solid var(--border); border-radius: var(--radius-md);">
         <h3 style="margin-top: 0; margin-bottom: 20px; font-family: var(--font-display); font-size: 1.15rem; color: var(--text-primary);">
-          🎯 Misyon pou jodi a
+          ${dict.todayMissionsTitle}
         </h3>
         <ul id="calendarMissionsList" style="list-style: none; padding: 0; margin: 0;">
           ${generateDailyMissionsHTML(missions)}
