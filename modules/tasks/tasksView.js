@@ -6,8 +6,6 @@
 import { taskService } from "../../services/taskService.js";
 import { store } from "../../core/store.js";
 
-// Sove kach kadriye dashboard orijinal la pou lè nou tounen sou li
-let dashboardBackupHTML = null;
 let currentFilter = "all"; // Filtre aktyèl la ("all", "active", "done")
 
 /**
@@ -59,11 +57,6 @@ function generateMissionsListHTML(missions) {
 export function renderTasksView(state) {
   const mainContent = document.getElementById("mainContent");
   if (!mainContent) return;
-
-  // Sove dashboard la premye fwa si nou poko fè sa
-  if (!dashboardBackupHTML && mainContent.querySelector(".grid")) {
-    dashboardBackupHTML = mainContent.innerHTML;
-  }
 
   const missions = state.missions || [];
 
@@ -182,16 +175,6 @@ export function bindTasksEvents() {
       }
     }
   };
-}
-
-/**
- * Restore dashboard orijinal la lè nou retounen sou li
- */
-export function restoreDashboardView() {
-  const mainContent = document.getElementById("mainContent");
-  if (mainContent && dashboardBackupHTML) {
-    mainContent.innerHTML = dashboardBackupHTML;
-  }
 }
 
 // Abònman sou store a pou mete ajou lis misyon an lè gen chanjman pandan nou sou paj tasks la
