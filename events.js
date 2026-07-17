@@ -152,4 +152,38 @@ export function bindGlobalEvents() {
       console.log(`Rechèch LifeOS: ${tèksChèche}`);
     });
   }
+  // 8. Jere Fòm Plan Entènèt (Sidebar)
+  const internetPlanForm = document.getElementById("internetPlanForm");
+  if (internetPlanForm) {
+    internetPlanForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const provider = document.getElementById("networkSelect").value;
+      const planType = document.getElementById("planTypeSelect").value;
+      const totalDays = getDaysFromType(planType);
+
+      // Sove nouvo plan an nan store, dat kòmansman = jodi a
+      store.setState(state => {
+        const ansyenPlan = state.internetPlan;
+        const istorik = state.planHistory || [];
+
+        // Si te gen yon plan avan, mete l nan istorik
+        if (ansyenPlan && ansyenPlan.startDate) {
+          istorik.push({ ...ansyenPlan, endedAt: new Date().toISOString().split('T')[0] });
+        }
+
+        return {
+          ...state,
+          internetPlan: {
+            provider,
+            planType,
+            price: ansyenPlan?.price || "--",
+            startDate: new Date().toISOString().split('T')[0],
+            totalDays
+          },
+          planHistory: istorik
+        };
+      });
+    });
+  }
 }
