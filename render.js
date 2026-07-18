@@ -116,6 +116,7 @@ export function renderAll(state) {
     const planLeft = document.getElementById("planLeft");
     const planRenewDate = document.getElementById("planRenewDate");
     const sidebarPlanStatus = document.getElementById("sidebarPlanStatus");
+    const planPageStatus = document.getElementById("planPageStatus");
 
     if (planProvider) planProvider.textContent = plan.provider;
     if (planPrice) planPrice.textContent = plan.price;
@@ -125,6 +126,7 @@ export function renderAll(state) {
     if (planLeft) planLeft.textContent = `${daysLeft} jou`;
     if (planRenewDate) planRenewDate.textContent = `Renouvèlman: ${renewDate}`;
     if (sidebarPlanStatus) sidebarPlanStatus.textContent = `${plan.provider} — ${status}`;
+    if (planPageStatus) planPageStatus.textContent = `${plan.provider} — ${status}`; 
   }
 
   // 8. Pwojè yo (Projects List)
