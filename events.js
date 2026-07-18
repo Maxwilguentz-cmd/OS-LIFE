@@ -34,14 +34,27 @@ export function bindGlobalEvents() {
       e.preventDefault();
       
       // Retire klas aktif sou ansyen an epi mete l sou sa ki klike a
+navItems.forEach(elt => {
+    elt.addEventListener("click", (e) => {
+      e.preventDefault();
       navItems.forEach(item => item.classList.remove("is-active"));
       elt.classList.add("is-active");
 
-      // Chanje tit paj la selon route la
       const routKounyeA = elt.getAttribute("data-route");
       if (viewTitle) {
         const tèksMeni = elt.querySelector("span")?.textContent || routKounyeA;
         viewTitle.textContent = tèksMeni;
+      }
+
+      // Chanje ant tablo bò a ak paj plan entènèt la
+      const grid = document.querySelector(".grid");
+      const planPage = document.getElementById("planPage");
+      if (routKounyeA === "plan") {
+        if (grid) grid.style.display = "none";
+        if (planPage) planPage.style.display = "block";
+      } else {
+        if (grid) grid.style.display = "grid";
+        if (planPage) planPage.style.display = "none";
       }
     });
   });
