@@ -185,3 +185,42 @@ export function renderAll(state) {
     `).join('');
   }
 }
+// 11. Kloch Notifikasyon (kantite alèt ki pa li)
+  const notificationBadge = document.getElementById("notificationBadge");
+  const notificationBtn = document.getElementById("notificationBtn");
+  const alertsList = document.getElementById("alertsList");
+  const alertsEmpty = document.getElementById("alertsEmpty");
+
+  const alerts = state.planAlerts || [];
+  const paLiCount = alerts.filter(a => !a.read).length;
+
+  if (notificationBadge) {
+    notificationBadge.textContent = paLiCount > 9 ? "9+" : String(paLiCount);
+    notificationBadge.style.display = paLiCount > 0 ? "flex" : "none";
+  }
+  if (notificationBtn) {
+    notificationBtn.setAttribute("aria-label",
+      paLiCount > 0 ? `Notifikasyon, ${paLiCount} mesaj ou poko li` : "Notifikasyon, pa gen nouvo mesaj");
+  }
+  if (alertsList) {
+    const triye = [...alerts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    alertsList.innerHTML = triye.map(a => `
+      <li class="alert-item level-${a.level} ${a.read ? 'is-read' : ''}">
+        <span class="alert-dot" aria-hidden="true"></span>
+        <div class="alert-copy">
+          <span class="alert-title">${a.message}</span>
+          <span class="alert-meta">Renouvèlman: ${a.renewDate}</span>
+        </div>
+      </li>
+    `).join('');
+    if (alertsEmpty) alertsEmpty.style.display = alerts.length ? "none" : "block";
+  }
+
+  // 12. Pousantaj itilizasyon nan modal Plan Entènèt la
+  const planModalPct = document.getElementById("planModalPct");
+  const planModalDaysLeft = document.getElementById("planModalDaysLeft");
+  if (plan) {
+    const { daysLeft, pct } = calculatePlanStatus(plan);
+    if (planModalPct) planModalPct.textContent = `${pct}% itilize`;
+    if (planModalDaysLeft) planModalDaysLeft.textContent = `${daysLeft} jou ki rete`;
+  }
