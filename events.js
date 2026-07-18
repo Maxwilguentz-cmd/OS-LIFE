@@ -26,15 +26,11 @@ export function bindGlobalEvents() {
   }
 
   // 2. Jere Navigasyon (Chanje Route / View aktif)
+// 2. Jere Navigasyon (Chanje Route / View aktif)
   const navItems = document.querySelectorAll(".nav-item[data-route]");
   const viewTitle = document.getElementById("viewTitle");
 
   navItems.forEach(elt => {
-    elt.addEventListener("click", (e) => {
-      e.preventDefault();
-      
-      // Retire klas aktif sou ansyen an epi mete l sou sa ki klike a
-navItems.forEach(elt => {
     elt.addEventListener("click", (e) => {
       e.preventDefault();
       navItems.forEach(item => item.classList.remove("is-active"));
