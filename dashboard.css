@@ -676,3 +676,54 @@ button{ font-family: inherit; cursor:pointer; }
   font-size: 0.78rem;
   color: var(--text-secondary);
 }
+
+/* ---------- Modals (Plan Entènèt / Alèt) ---------- */
+.modal-backdrop{
+  display:none; position:fixed; inset:0; z-index:80;
+  background: rgba(6,7,10,0.6); backdrop-filter: blur(3px);
+}
+.modal-backdrop.is-open{ display:block; }
+
+.modal{
+  display:none; position:fixed; inset:0; z-index:90;
+  align-items:center; justify-content:center; padding:20px;
+}
+.modal.is-open{ display:flex; }
+
+.modal-card{
+  width:100%; max-width:440px;
+  background: var(--bg-elevated);
+  border:1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding:24px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7);
+  animation: modalPop .22s var(--ease);
+}
+@keyframes modalPop{ from{ opacity:0; transform: translateY(8px) scale(.98);} to{ opacity:1; transform:none; } }
+
+.modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.modal-head h3{ margin:0; font-family: var(--font-display); font-size:1rem; font-weight:600; }
+
+.plan-modal-stats{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.plan-modal-days{ font-size:0.8rem; color: var(--text-secondary); font-family: var(--font-mono); }
+
+.alerts-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; max-height:320px; overflow-y:auto; }
+.alert-item{ display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:12px; background: rgba(255,255,255,0.03); border:1px solid var(--border); }
+.alert-dot{ width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0; background: var(--accent-gold); }
+.alert-item.level-2 .alert-dot{ background: var(--accent-coral); }
+.alert-item.level-1 .alert-dot{ background:#ef4444; }
+.alert-item.is-read{ opacity:0.55; }
+.alert-copy{ display:flex; flex-direction:column; gap:2px; }
+.alert-title{ font-size:0.84rem; font-weight:500; }
+.alert-meta{ font-size:0.72rem; color: var(--text-tertiary); font-family: var(--font-mono); }
+.alerts-empty{ margin:14px 2px 0; font-size:0.82rem; color: var(--text-tertiary); text-align:center; }
+
+.count-badge{
+  position:absolute; top:-4px; right:-4px;
+  min-width:16px; height:16px; padding:0 4px; border-radius:20px;
+  background: var(--accent-coral); color:#1a0d08;
+  font-size:0.62rem; font-weight:700; font-family: var(--font-mono);
+  display:none; align-items:center; justify-content:center;
+  box-shadow: 0 0 0 2px var(--bg);
+}
+
