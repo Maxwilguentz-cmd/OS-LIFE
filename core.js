@@ -1,7 +1,6 @@
 // ============================================================
 // LifeOS — core.js (Sistèm Eta Santral ak Pèsistans)
 // ============================================================
-
 // Done pa defo (Mock State) si localStorage vid
 const defaultState = {
   settings: { language: "ht", theme: "dark" },
@@ -16,14 +15,17 @@ const defaultState = {
     { id: 2, title: "Lanse MVP an out 2026", pct: 100, done: true }
   ],
   savings: { current: 4500, target: 5000 },
-// core.js — nan defaultState
-internetPlan: {
-  provider: "Natcom Fiber",
-  price: "35 USD",
-  totalDays: 30,
-  startDate: new Date(Date.now() - 27 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-},
-planAlerts: [], // <-- nouvo: istorik alèt yo (3j, 2j, 1j)
+  internetPlan: {
+    provider: "Natcom Fiber",
+    price: "35 USD",
+    totalDays: 30,
+    // Plan an kòmanse depi 27 jou, kidonk li rete 3 jou — deklanche premye alèt la
+    startDate: new Date(Date.now() - 27 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  },
+  planAlerts: [], // Istorik alèt 3j/2j/1j yo (id, level, renewDate, message, read)
+  projects: [
+    { id: 1, name: "LifeOS App", pct: 60, color: "#E8B14F" },
+    { id: 2, name: "E-Commerce Platform", pct: 25, color: "#8B7FF6" }
   ],
   learning: { topic: "Sistèm Distribiye ak Python", pct: 40, duration: "12h / 30h" },
   weeklyStats: { focusedTime: "32h", tasksCompleted: 14, dailyData: [40, 75, 20, 90, 60, 15, 0] }
@@ -38,14 +40,14 @@ export const store = {
   getState() {
     return currentState;
   },
-  
+
   // Fonksyon pou chanje eta a epi avèti tout moun ki t ap koute
   setState(actionFn) {
     const nextState = actionFn(currentState);
-    
+
     // Kouri tout middlewares yo anvan nou mete eta a ajou
     middlewares.forEach(mw => mw(nextState));
-    
+
     currentState = nextState;
     listeners.forEach(({ selector, callback, lastSelected }) => {
       const selected = selector(currentState);
@@ -55,7 +57,6 @@ export const store = {
       }
     });
   },
-
   // Koute sèlman si pati nan eta a ki enterese w la chanje
   subscribeSelector(selector, callback) {
     const lastSelected = { value: selector(currentState) };
@@ -63,7 +64,6 @@ export const store = {
     listeners.add(listenerObj);
     return () => listeners.delete(listenerObj);
   },
-
   // Ajoute middleware
   use(mw) {
     middlewares.push(mw);
@@ -88,7 +88,7 @@ export function applyLanguage(lang) {
     ...state,
     settings: { ...state.settings, language: lang }
   }));
-  
+
   const viewTitle = document.getElementById("viewTitle");
   if (viewTitle) {
     viewTitle.textContent = lang === "ht" ? i18n.ht.overview : i18n.en.overview;
