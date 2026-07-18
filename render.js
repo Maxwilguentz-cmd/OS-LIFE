@@ -2,6 +2,7 @@
 // LifeOS — render.js (Afichaj Dinamik nan UI a)
 // ============================================================
 import { calculatePlanStatus } from "./planLogic.js";
+
 export function renderAll(state) {
   if (!state) return;
 
@@ -25,13 +26,13 @@ export function renderAll(state) {
   const welcomeTitle = document.getElementById("welcomeTitle");
   const lang = state.settings?.language || "ht";
   const doneMissions = state.missions ? state.missions.filter(m => m.done).length : 0;
-  
+
   if (welcomeTitle) {
-    welcomeTitle.textContent = lang === "ht" 
+    welcomeTitle.textContent = lang === "ht"
       ? `Bonjou ankò, ${user.name} — ou pare pou domine jounen an?`
       : `Welcome back, ${user.name} — ready to dominate the day?`;
   }
-  
+
   const welcomeDoneCount = document.getElementById("welcomeDoneCount");
   if (welcomeDoneCount) {
     welcomeDoneCount.textContent = lang === "ht"
@@ -45,7 +46,7 @@ export function renderAll(state) {
   const pousantajJounen = (minitPase / 1440) * 100;
   const arcFill = document.querySelector(".arc-fill");
   const arcTime = document.querySelector(".arc-time");
-  
+
   if (arcTime) {
     arcTime.textContent = kounyeA.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   }
@@ -89,21 +90,20 @@ export function renderAll(state) {
   const savingsPctVal = Math.min(Math.round((savings.current / savings.target) * 100), 100);
   const savingsPct = document.getElementById("savingsPct");
   const savingsRing = document.getElementById("savingsRing");
-  
+
   if (savingsPct) savingsPct.textContent = `${savingsPctVal}%`;
   if (savingsRing) {
     // Dasharray total se 314 nan CSS la
     const ringOffset = 314 - (314 * savingsPctVal) / 100;
     savingsRing.style.strokeDashoffset = ringOffset;
   }
-  
+
   const savingsAmountText = document.querySelector(".savings-amounts");
   if (savingsAmountText) {
     savingsAmountText.innerHTML = `$${savings.current} <span>/ $${savings.target}</span>`;
   }
 
- 
-// 7. Plan Entènèt (Internet Plan)
+  // 7. Plan Entènèt (Internet Plan) — kad tablo bò a + modal jesyon
   const plan = state.internetPlan;
   if (plan) {
     const { daysLeft, pct, renewDate, status } = calculatePlanStatus(plan);
@@ -117,6 +117,8 @@ export function renderAll(state) {
     const planRenewDate = document.getElementById("planRenewDate");
     const sidebarPlanStatus = document.getElementById("sidebarPlanStatus");
     const planPageStatus = document.getElementById("planPageStatus");
+    const planModalPct = document.getElementById("planModalPct");
+    const planModalDaysLeft = document.getElementById("planModalDaysLeft");
 
     if (planProvider) planProvider.textContent = plan.provider;
     if (planPrice) planPrice.textContent = plan.price;
@@ -126,7 +128,9 @@ export function renderAll(state) {
     if (planLeft) planLeft.textContent = `${daysLeft} jou`;
     if (planRenewDate) planRenewDate.textContent = `Renouvèlman: ${renewDate}`;
     if (sidebarPlanStatus) sidebarPlanStatus.textContent = `${plan.provider} — ${status}`;
-    if (planPageStatus) planPageStatus.textContent = `${plan.provider} — ${status}`; 
+    if (planPageStatus) planPageStatus.textContent = `${plan.provider} — ${status}`;
+    if (planModalPct) planModalPct.textContent = `${pct}% itilize`;
+    if (planModalDaysLeft) planModalDaysLeft.textContent = `${daysLeft} jou ki rete`;
   }
 
   // 8. Pwojè yo (Projects List)
@@ -166,15 +170,15 @@ export function renderAll(state) {
   // 10. Estatistik chak semèn (Weekly Stats & Bar Chart)
   const statFocusedTime = document.getElementById("statFocusedTime");
   const weeklyBars = document.getElementById("weeklyBars");
-  
+
   if (statFocusedTime && state.weeklyStats) {
     statFocusedTime.textContent = state.weeklyStats.focusedTime;
   }
-  
+
   if (weeklyBars && state.weeklyStats?.dailyData) {
     const jouYo = ["L", "M", "M", "J", "V", "S", "D"];
     const jodiEndeks = (new Date().getDay() + 6) % 7; // Konvèti pou Lendi kòmanse kòm 0
-    
+
     weeklyBars.innerHTML = state.weeklyStats.dailyData.map((dataVal, i) => `
       <div class="bar-col">
         <div class="bar-track">
@@ -184,8 +188,8 @@ export function renderAll(state) {
       </div>
     `).join('');
   }
-}
-// 11. Kloch Notifikasyon (kantite alèt ki pa li)
+
+  // 11. Kloch Notifikasyon (kantite alèt ki pa li) + Modal Alèt
   const notificationBadge = document.getElementById("notificationBadge");
   const notificationBtn = document.getElementById("notificationBtn");
   const alertsList = document.getElementById("alertsList");
@@ -215,12 +219,4 @@ export function renderAll(state) {
     `).join('');
     if (alertsEmpty) alertsEmpty.style.display = alerts.length ? "none" : "block";
   }
-
-  // 12. Pousantaj itilizasyon nan modal Plan Entènèt la
-  const planModalPct = document.getElementById("planModalPct");
-  const planModalDaysLeft = document.getElementById("planModalDaysLeft");
-  if (plan) {
-    const { daysLeft, pct } = calculatePlanStatus(plan);
-    if (planModalPct) planModalPct.textContent = `${pct}% itilize`;
-    if (planModalDaysLeft) planModalDaysLeft.textContent = `${daysLeft} jou ki rete`;
-  }
+}
