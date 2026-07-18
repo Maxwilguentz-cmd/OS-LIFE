@@ -148,7 +148,66 @@ button{ font-family: inherit; cursor:pointer; }
 .user-role{ font-size:0.74rem; color:var(--text-tertiary); }
 
 .sidebar-scrim{ display:none; }
-
+/* ---------- Plan Entènèt (Sidebar) ---------- */
+.sidebar-plan{
+  padding: 14px 12px;
+  margin: 8px 0;
+  border-radius: var(--radius-md);
+  background: var(--glass);
+  border: 1px solid var(--border);
+}
+.sidebar-plan-title{
+  margin: 0 0 10px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+#internetPlanForm{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#internetPlanForm select,
+#internetPlanForm input{
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color .18s var(--ease);
+}
+#internetPlanForm select:focus,
+#internetPlanForm input:focus{
+  border-color: var(--border-strong);
+}
+#internetPlanForm select option{
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+#internetPlanForm input::placeholder{
+  color: var(--text-tertiary);
+}
+#internetPlanForm button{
+  padding: 9px;
+  border-radius: 9px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-gold), #cf9a3c);
+  color: #17130a;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+.sidebar-plan-status{
+  margin: 10px 2px 0;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
 /* ---------- Main column ---------- */
 .main{
   flex:1;
