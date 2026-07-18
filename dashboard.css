@@ -634,3 +634,45 @@ button{ font-family: inherit; cursor:pointer; }
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+
+
+/* ---------- Paj Plan Entènèt (Vrè Paj) ---------- */
+.plan-page{
+  padding-top: 4px;
+}
+.plan-page #internetPlanForm{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.plan-page #internetPlanForm select,
+.plan-page #internetPlanForm input{
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+.plan-page #internetPlanForm select option{
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+.plan-page #internetPlanForm button{
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-gold), #cf9a3c);
+  color: #17130a;
+  font-weight: 600;
+  cursor: pointer;
+}
+.plan-page .sidebar-plan-status{
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
