@@ -16,10 +16,14 @@ const defaultState = {
     { id: 2, title: "Lanse MVP an out 2026", pct: 100, done: true }
   ],
   savings: { current: 4500, target: 5000 },
-  internetPlan: { provider: "Natcom Fiber", price: "35 USD", totalDays: 30, daysLeft: 12 },
-  projects: [
-    { id: 1, name: "LifeOS App", pct: 60, color: "#E8B14F" },
-    { id: 2, name: "E-Commerce Platform", pct: 25, color: "#8B7FF6" }
+// core.js — nan defaultState
+internetPlan: {
+  provider: "Natcom Fiber",
+  price: "35 USD",
+  totalDays: 30,
+  startDate: new Date(Date.now() - 27 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+},
+planAlerts: [], // <-- nouvo: istorik alèt yo (3j, 2j, 1j)
   ],
   learning: { topic: "Sistèm Distribiye ak Python", pct: 40, duration: "12h / 30h" },
   weeklyStats: { focusedTime: "32h", tasksCompleted: 14, dailyData: [40, 75, 20, 90, 60, 15, 0] }
